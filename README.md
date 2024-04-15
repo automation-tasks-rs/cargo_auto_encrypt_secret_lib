@@ -5,20 +5,25 @@
 [//]: # (auto_cargo_toml_to_md start)
 
 **Library to encrypt/decrypt secrets**  
-***version: 0.1.37 date: 2024-04-15 author: [bestia.dev](https://bestia.dev) repository: [Github](https://github.com/bestia-dev/encrypt_secret)***  
+***version: 0.1.39 date: 2024-04-15 author: [bestia.dev](https://bestia.dev) repository: [Github](https://github.com/automation-tasks-rs/encrypt_secret)***  
 
 [//]: # (auto_cargo_toml_to_md end)
 
+ [![crates.io](https://img.shields.io/crates/v/encrypt_secret.svg)](https://crates.io/crates/encrypt_secret)
+ [![Documentation](https://docs.rs/encrypt_secret/badge.svg)](https://docs.rs/encrypt_secret/)
+ [![Lib.rs](https://img.shields.io/badge/Lib.rs-rust-orange.svg)](https://lib.rs/crates/encrypt_secret/)
+ [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/encrypt_secret/blob/master/LICENSE)
+ [![Rust](https://github.com/bestia-dev/encrypt_secret/workflows/RustAction/badge.svg)](https://github.com/bestia-dev/encrypt_secret/)
+ ![Hits](https://bestia.dev/webpage_hit_counter/get_svg_image/1785154337.svg)
+
 [//]: # (auto_lines_of_code start)
-[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-87-green.svg)]()
-[![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-78-blue.svg)]()
-[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-11-purple.svg)]()
-[![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)]()
-[![Lines in tests](https://img.shields.io/badge/Lines_in_tests-77-orange.svg)]()
+[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-68-green.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+[![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-78-blue.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-12-purple.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+[![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+[![Lines in tests](https://img.shields.io/badge/Lines_in_tests-72-orange.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
 
 [//]: # (auto_lines_of_code end)
-
-[![crates.io](https://img.shields.io/crates/v/encrypt_secret.svg)](https://crates.io/crates/encrypt_secret) [![Documentation](https://docs.rs/encrypt_secret/badge.svg)](https://docs.rs/encrypt_secret/) [![crev reviews](https://web.crev.dev/rust-reviews/badge/crev_count/encrypt_secret.svg)](https://web.crev.dev/rust-reviews/crate/encrypt_secret/) [![Lib.rs](https://img.shields.io/badge/Lib.rs-rust-orange.svg)](https://lib.rs/crates/encrypt_secret/) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/encrypt_secret/blob/master/LICENSE) [![Rust](https://github.com/bestia-dev/encrypt_secret/workflows/RustAction/badge.svg)](https://github.com/bestia-dev/encrypt_secret/) ![Hits](https://bestia.dev/webpage_hit_counter/get_svg_image/1785154337.svg)
 
 Hashtags: #rustlang #buildtool #developmenttool #github  
 My projects on GitHub are more like a tutorial than a finished product: [bestia-dev tutorials](https://github.com/bestia-dev/tutorials_rust_wasm).

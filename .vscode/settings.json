@@ -23,6 +23,7 @@
         "sshadd",
         "termion",
         "UNHIDE",
-        "zdravje"
+        "zdravje",
+        "zeroize"
     ]
 }

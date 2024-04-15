@@ -96,29 +96,6 @@
 <a href="#94" id="94">94</a>
 <a href="#95" id="95">95</a>
 <a href="#96" id="96">96</a>
-<a href="#97" id="97">97</a>
-<a href="#98" id="98">98</a>
-<a href="#99" id="99">99</a>
-<a href="#100" id="100">100</a>
-<a href="#101" id="101">101</a>
-<a href="#102" id="102">102</a>
-<a href="#103" id="103">103</a>
-<a href="#104" id="104">104</a>
-<a href="#105" id="105">105</a>
-<a href="#106" id="106">106</a>
-<a href="#107" id="107">107</a>
-<a href="#108" id="108">108</a>
-<a href="#109" id="109">109</a>
-<a href="#110" id="110">110</a>
-<a href="#111" id="111">111</a>
-<a href="#112" id="112">112</a>
-<a href="#113" id="113">113</a>
-<a href="#114" id="114">114</a>
-<a href="#115" id="115">115</a>
-<a href="#116" id="116">116</a>
-<a href="#117" id="117">117</a>
-<a href="#118" id="118">118</a>
-<a href="#119" id="119">119</a>
 </pre></div><pre class="rust"><code><span class="comment">// symmetric_mod.rs
 
 // bring trait into scope
@@ -131,29 +108,22 @@
 ///
 /// secret_passcode_bytes must be 32 bytes or more
 /// returns the encrypted_string
-</span><span class="kw">pub fn </span>encrypt_symmetric(
-    secret_string: <span class="kw-2">&amp;</span>secrecy::SecretString,
-    secret_passcode_bytes: <span class="kw-2">&amp;</span>secrecy::SecretVec&lt;u8&gt;,
-) -&gt; <span class="prelude-ty">Option</span>&lt;EncryptedString&gt; {
+</span><span class="kw">pub fn </span>encrypt_symmetric(secret_string: <span class="kw-2">&amp;</span>secrecy::SecretString, secret_passcode_bytes: <span class="kw-2">&amp;</span>secrecy::SecretVec&lt;u8&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;EncryptedString&gt; {
     <span class="comment">//only first 32 bytes
     </span><span class="kw">let </span><span class="kw-2">mut </span>secret_passcode_32bytes = [<span class="number">0u8</span>; <span class="number">32</span>];
     secret_passcode_32bytes.copy_from_slice(<span class="kw-2">&amp;</span>secret_passcode_bytes.expose_secret()[<span class="number">0</span>..<span class="number">32</span>]);
 
     <span class="kw">let </span>cipher = &lt;aes_gcm::Aes256Gcm <span class="kw">as </span>aes_gcm::KeyInit&gt;::new(<span class="kw-2">&amp;</span>secret_passcode_32bytes.into());
-    <span class="comment">// this is salt
-    </span><span class="kw">let </span>nonce =
-        &lt;aes_gcm::Aes256Gcm <span class="kw">as </span>aes_gcm::AeadCore&gt;::generate_nonce(<span class="kw-2">&amp;mut </span>aes_gcm::aead::OsRng);
+    <span class="comment">// nonce is salt
+    </span><span class="kw">let </span>nonce = &lt;aes_gcm::Aes256Gcm <span class="kw">as </span>aes_gcm::AeadCore&gt;::generate_nonce(<span class="kw-2">&amp;mut </span>aes_gcm::aead::OsRng);
 
-    <span class="kw">let </span><span class="prelude-val">Ok</span>(ciphertext) =
-        aes_gcm::aead::Aead::encrypt(<span class="kw-2">&amp;</span>cipher, <span class="kw-2">&amp;</span>nonce, secret_string.expose_secret().as_bytes())
-    <span class="kw">else </span>{
+    <span class="kw">let </span><span class="prelude-val">Ok</span>(ciphertext) = aes_gcm::aead::Aead::encrypt(<span class="kw-2">&amp;</span>cipher, <span class="kw-2">&amp;</span>nonce, secret_string.expose_secret().as_bytes()) <span class="kw">else </span>{
         <span class="kw">return </span><span class="prelude-val">None</span>;
     };
 
     <span class="kw">let </span><span class="kw-2">mut </span>encrypted_bytes = nonce.to_vec();
     encrypted_bytes.extend_from_slice(<span class="kw-2">&amp;</span>ciphertext);
-    <span class="kw">let </span>encrypted_string =
-        &lt;base64ct::Base64 <span class="kw">as </span>base64ct::Encoding&gt;::encode_string(<span class="kw-2">&amp;</span>encrypted_bytes);
+    <span class="kw">let </span>encrypted_string = &lt;base64ct::Base64 <span class="kw">as </span>base64ct::Encoding&gt;::encode_string(<span class="kw-2">&amp;</span>encrypted_bytes);
     <span class="prelude-val">Some</span>(EncryptedString(encrypted_string))
 }
 
@@ -161,18 +131,15 @@
 ///
 /// secret_passcode_bytes must be 32 bytes or more
 /// Returns the secret_string
-</span><span class="kw">pub fn </span>decrypt_symmetric(
-    encrypted_string: <span class="kw-2">&amp;</span>EncryptedString,
-    secret_passcode_bytes: <span class="kw-2">&amp;</span>secrecy::SecretVec&lt;u8&gt;,
-) -&gt; <span class="prelude-ty">Option</span>&lt;secrecy::SecretString&gt; {
-    <span class="kw">let </span>encrypted_bytes =
-        &lt;base64ct::Base64 <span class="kw">as </span>base64ct::Encoding&gt;::decode_vec(<span class="kw-2">&amp;</span>encrypted_string.<span class="number">0</span>).unwrap();
+</span><span class="kw">pub fn </span>decrypt_symmetric(encrypted_string: <span class="kw-2">&amp;</span>EncryptedString, secret_passcode_bytes: <span class="kw-2">&amp;</span>secrecy::SecretVec&lt;u8&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;secrecy::SecretString&gt; {
+    <span class="kw">let </span>encrypted_bytes = &lt;base64ct::Base64 <span class="kw">as </span>base64ct::Encoding&gt;::decode_vec(<span class="kw-2">&amp;</span>encrypted_string.<span class="number">0</span>).unwrap();
     <span class="comment">//only first 32 bytes
     </span><span class="kw">let </span><span class="kw-2">mut </span>secret_passcode_32bytes = [<span class="number">0u8</span>; <span class="number">32</span>];
     secret_passcode_32bytes.copy_from_slice(<span class="kw-2">&amp;</span>secret_passcode_bytes.expose_secret()[<span class="number">0</span>..<span class="number">32</span>]);
 
     <span class="kw">let </span>cipher = &lt;aes_gcm::Aes256Gcm <span class="kw">as </span>aes_gcm::KeyInit&gt;::new(<span class="kw-2">&amp;</span>secret_passcode_32bytes.into());
-    <span class="kw">let </span>nonce = rsa::sha2::digest::generic_array::GenericArray::from_slice(<span class="kw-2">&amp;</span>encrypted_bytes[..<span class="number">12</span>]);
+    <span class="comment">// nonce is salt
+    </span><span class="kw">let </span>nonce = rsa::sha2::digest::generic_array::GenericArray::from_slice(<span class="kw-2">&amp;</span>encrypted_bytes[..<span class="number">12</span>]);
     <span class="kw">let </span>ciphertext = <span class="kw-2">&amp;</span>encrypted_bytes[<span class="number">12</span>..];
 
     <span class="kw">let </span><span class="prelude-val">Ok</span>(decrypted_bytes) = aes_gcm::aead::Aead::decrypt(<span class="kw-2">&amp;</span>cipher, nonce, ciphertext) <span class="kw">else </span>{
@@ -191,9 +158,7 @@
     </span><span class="kw">let </span>salt = <span class="string">b"constant_salt"</span>;
 
     <span class="kw">let </span><span class="kw-2">mut </span>secret_passcode = [<span class="number">0u8</span>; <span class="number">32</span>];
-    Argon2::default()
-        .hash_password_into(secret_password.as_bytes(), salt, <span class="kw-2">&amp;mut </span>secret_passcode)
-        .unwrap();
+    Argon2::default().hash_password_into(secret_password.as_bytes(), salt, <span class="kw-2">&amp;mut </span>secret_passcode).unwrap();
 
     secrecy::SecretVec::new(secret_passcode.to_vec())
 }
@@ -201,10 +166,7 @@
 <span class="doccomment">/// Encrypts secret_string with secret_password
 ///
 /// returns an Encrypted string
-</span><span class="kw">pub fn </span>encrypt_symmetric_with_password(
-    secret_string: <span class="kw-2">&amp;</span>secrecy::SecretString,
-    secret_password: <span class="kw-2">&amp;</span>secrecy::SecretString,
-) -&gt; <span class="prelude-ty">Option</span>&lt;EncryptedString&gt; {
+</span><span class="kw">pub fn </span>encrypt_symmetric_with_password(secret_string: <span class="kw-2">&amp;</span>secrecy::SecretString, secret_password: <span class="kw-2">&amp;</span>secrecy::SecretString) -&gt; <span class="prelude-ty">Option</span>&lt;EncryptedString&gt; {
     <span class="kw">let </span>secret_passcode_bytes = password_to_passcode(secret_password.expose_secret());
     encrypt_symmetric(secret_string, <span class="kw-2">&amp;</span>secret_passcode_bytes)
 }
@@ -212,10 +174,7 @@
 <span class="doccomment">/// Decrypts encrypted_string with secret_password
 ///
 /// Returns the secret_string
-</span><span class="kw">pub fn </span>decrypt_symmetric_with_password(
-    encrypted_string: <span class="kw-2">&amp;</span>EncryptedString,
-    secret_password: <span class="kw-2">&amp;</span>secrecy::SecretString,
-) -&gt; <span class="prelude-ty">Option</span>&lt;secrecy::SecretString&gt; {
+</span><span class="kw">pub fn </span>decrypt_symmetric_with_password(encrypted_string: <span class="kw-2">&amp;</span>EncryptedString, secret_password: <span class="kw-2">&amp;</span>secrecy::SecretString) -&gt; <span class="prelude-ty">Option</span>&lt;secrecy::SecretString&gt; {
     <span class="kw">let </span>secret_passcode_bytes = password_to_passcode(secret_password.expose_secret());
     decrypt_symmetric(encrypted_string, <span class="kw-2">&amp;</span>secret_passcode_bytes)
 }
@@ -225,17 +184,12 @@
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
     <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_add() {
+    </span><span class="kw">fn </span>test_encrypt_decrypt() {
         <span class="kw">let </span>secret_string = secrecy::SecretString::new(<span class="string">"test test test"</span>.to_string());
         <span class="kw">let </span>secret_password = secrecy::SecretString::new(<span class="string">"password"</span>.to_string());
-        <span class="kw">let </span>encrypted_string =
-            encrypt_symmetric_with_password(<span class="kw-2">&amp;</span>secret_string, <span class="kw-2">&amp;</span>secret_password).unwrap();
-        <span class="kw">let </span>decrypted_string =
-            decrypt_symmetric_with_password(<span class="kw-2">&amp;</span>encrypted_string, <span class="kw-2">&amp;</span>secret_password).unwrap();
-        <span class="macro">assert_eq!</span>(
-            decrypted_string.expose_secret(),
-            secret_string.expose_secret()
-        );
+        <span class="kw">let </span>encrypted_string = encrypt_symmetric_with_password(<span class="kw-2">&amp;</span>secret_string, <span class="kw-2">&amp;</span>secret_password).unwrap();
+        <span class="kw">let </span>decrypted_string = decrypt_symmetric_with_password(<span class="kw-2">&amp;</span>encrypted_string, <span class="kw-2">&amp;</span>secret_password).unwrap();
+        <span class="macro">assert_eq!</span>(decrypted_string.expose_secret(), secret_string.expose_secret());
     }
 }
 </code></pre></div></section></main></body></html>
