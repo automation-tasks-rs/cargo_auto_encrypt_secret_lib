@@ -75,3 +75,5 @@ pub use symmetric_mod::decrypt_symmetric;
 pub use symmetric_mod::decrypt_symmetric_with_password;
 pub use symmetric_mod::encrypt_symmetric;
 pub use symmetric_mod::encrypt_symmetric_with_password;
+
+pub use symmetric_mod::EncryptedString;
