@@ -62,7 +62,13 @@ pub fn sign_with_ssh_agent_or_identity_file(identity_private_file_path: &camino:
     /// This is used for normal code execution.
     #[cfg(not(test))]
     fn get_passphrase() -> secrecy::SecretString {
-        secrecy::SecretString::new(inquire::Password::new("").without_confirmation().with_display_mode(inquire::PasswordDisplayMode::Masked).prompt().unwrap())
+        secrecy::SecretString::new(
+            inquire::Password::new("")
+                .without_confirmation()
+                .with_display_mode(inquire::PasswordDisplayMode::Masked)
+                .prompt()
+                .unwrap(),
+        )
     }
 
     let fingerprint_from_file = crate::ssh_mod::get_fingerprint_from_file(identity_private_file_path);

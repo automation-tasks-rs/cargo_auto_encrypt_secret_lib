@@ -5,7 +5,7 @@
 [//]: # (auto_cargo_toml_to_md start)
 
 **Library to encrypt/decrypt secrets**  
-***version: 0.1.48 date: 2024-04-15 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/automation-tasks-rs/encrypt_secret)***  
+***version: 1.0.1 date: 2024-04-15 author: [bestia.dev](https://bestia.dev) repository: [Github](https://github.com/automation-tasks-rs/encrypt_secret)***  
 
 [//]: # (auto_cargo_toml_to_md end)
 
@@ -21,7 +21,7 @@
 [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-176-blue.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
 [![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-34-purple.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
 [![Lines in examples](https://img.shields.io/badge/Lines_in_examples-22-yellow.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-[![Lines in tests](https://img.shields.io/badge/Lines_in_tests-195-orange.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+[![Lines in tests](https://img.shields.io/badge/Lines_in_tests-148-orange.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
 
 [//]: # (auto_lines_of_code end)
 

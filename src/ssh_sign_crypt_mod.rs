@@ -79,7 +79,13 @@ pub fn encrypt_with_ssh_interactive_save_file(identity_file_path: &camino::Utf8P
     fn get_token() -> secrecy::SecretString {
         eprintln!(" ");
         eprintln!("   {BLUE}Enter the API token to encrypt:{RESET}");
-        secrecy::SecretString::new(inquire::Password::new("").without_confirmation().with_display_mode(inquire::PasswordDisplayMode::Masked).prompt().unwrap())
+        secrecy::SecretString::new(
+            inquire::Password::new("")
+                .without_confirmation()
+                .with_display_mode(inquire::PasswordDisplayMode::Masked)
+                .prompt()
+                .unwrap(),
+        )
     }
 
     let identity_file_path_expanded = crate::utils_mod::file_path_home_expand(identity_file_path);
