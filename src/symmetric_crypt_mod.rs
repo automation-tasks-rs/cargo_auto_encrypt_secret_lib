@@ -1,4 +1,4 @@
-// symmetric_mod.rs
+// symmetric_crypt_mod.rs
 
 // bring trait into scope
 use secrecy::ExposeSecret;

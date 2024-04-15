@@ -85,11 +85,12 @@ fn print_help() {
 
 /// all example commands in one place
 fn print_examples_cmd(){
-/*
+
     println!(r#"{YELLOW}run examples:{RESET}
-{GREEN}cargo run --example example1{RESET}
+{GREEN}cargo run --example encrypt_to_file{RESET}
+{GREEN}cargo run --example decrypt_from_file{RESET}
 "#);
-*/
+
 }
 
 /// sub-command for bash auto-completion of `cargo auto` using the crate `dev_bestia_cargo_completion`

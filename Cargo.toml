@@ -1,6 +1,6 @@
 [package]
 name = "encrypt_secret"
-version = "0.1.40"
+version = "1.0.0"
 authors = ["bestia.dev"]
 homepage = "https://bestia.dev"
 edition = "2021"
@@ -29,3 +29,6 @@ zeroize = "1.7.0"
 aes-gcm = "0.10.3"
 camino = "1.1.6"
 base64ct = {version = "1.6.0", features = ["alloc"] }
+home = "0.5.9"
+inquire = "0.7.0"
+serde_json = {version= "1.0.114", features=["std"]}

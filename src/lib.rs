@@ -2,7 +2,7 @@
 //! # encrypt_secret
 //!
 //! **Library to encrypt/decrypt secrets**  
-//! ***version: 0.1.40 date: 2024-04-15 author: [bestia.dev](https://bestia.dev) repository: [Github](https://github.com/automation-tasks-rs/encrypt_secret)***  
+//! ***version: 0.1.45 date: 2024-04-15 author: [bestia.dev](https://bestia.dev) repository: [Github](https://github.com/automation-tasks-rs/encrypt_secret)***  
 //!
 //!  [![crates.io](https://img.shields.io/crates/v/encrypt_secret.svg)](https://crates.io/crates/encrypt_secret)
 //!  [![Documentation](https://docs.rs/encrypt_secret/badge.svg)](https://docs.rs/encrypt_secret/)
@@ -11,11 +11,11 @@
 //!  [![Rust](https://github.com/bestia-dev/encrypt_secret/workflows/RustAction/badge.svg)](https://github.com/bestia-dev/encrypt_secret/)
 //!  ![Hits](https://bestia.dev/webpage_hit_counter/get_svg_image/1785154337.svg)
 //!
-//! [![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-70-green.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-//! [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-83-blue.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-//! [![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-12-purple.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-240-green.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-164-blue.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-34-purple.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
 //! [![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-//! [![Lines in tests](https://img.shields.io/badge/Lines_in_tests-72-orange.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in tests](https://img.shields.io/badge/Lines_in_tests-86-orange.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
 //!
 //! Hashtags: #rustlang #buildtool #developmenttool #github  
 //! My projects on GitHub are more like a tutorial than a finished product: [bestia-dev tutorials](https://github.com/bestia-dev/tutorials_rust_wasm).
@@ -48,6 +48,16 @@
 //!
 //! We use a passcode to encrypt a string.
 //!
+//! ## Create an SSH key
+//!
+//! It is recommended to encrypt the API token with a dedicated SSH key. This way you have granular control how to use it.
+//!
+//! ```bash
+//! ssh-keygen -t ed25519 -C "github api token"
+//! # file name: /home/rustdevuser/.ssh/github_api_token_ssh_1
+//! # enter passphrase 2 times
+//! ```
+//!
 //!
 //! ## Open-source and free as a beer
 //!
@@ -66,14 +76,17 @@
 // endregion: auto_md_to_doc_comments include README.md A //!
 
 // region: mod, extern and use statements
-mod symmetric_mod;
+mod ssh_mod;
+mod ssh_sign_crypt_mod;
+mod symmetric_crypt_mod;
 mod utils_mod;
 
-// reexport functions for callers of the library
+// reexport types and functions for callers of the library
+pub use symmetric_crypt_mod::EncryptedString;
 
-pub use symmetric_mod::decrypt_symmetric;
-pub use symmetric_mod::decrypt_symmetric_with_password;
-pub use symmetric_mod::encrypt_symmetric;
-pub use symmetric_mod::encrypt_symmetric_with_password;
-
-pub use symmetric_mod::EncryptedString;
+pub use ssh_sign_crypt_mod::decrypt_with_ssh_interactive_from_file;
+pub use ssh_sign_crypt_mod::encrypt_with_ssh_interactive_save_file;
+pub use symmetric_crypt_mod::decrypt_symmetric;
+pub use symmetric_crypt_mod::decrypt_symmetric_with_password;
+pub use symmetric_crypt_mod::encrypt_symmetric;
+pub use symmetric_crypt_mod::encrypt_symmetric_with_password;

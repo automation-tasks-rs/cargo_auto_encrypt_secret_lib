@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["decrypt_symmetric","decrypt_symmetric_with_password","encrypt_symmetric","encrypt_symmetric_with_password"],"mod":["symmetric_mod","utils_mod"],"struct":["EncryptedString"]};
+window.SIDEBAR_ITEMS = {"fn":["decrypt_symmetric","decrypt_symmetric_with_password","decrypt_with_ssh_interactive_from_file","encrypt_symmetric","encrypt_symmetric_with_password","encrypt_with_ssh_interactive_save_file"],"mod":["ssh_mod","ssh_sign_crypt_mod","symmetric_crypt_mod","utils_mod"],"struct":["EncryptedString"]};

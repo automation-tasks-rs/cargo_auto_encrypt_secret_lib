@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {};
+window.SIDEBAR_ITEMS = {"constant":["BLUE","GREEN","RED","RESET","YELLOW"],"fn":["file_path_home_expand","home_dir"]};

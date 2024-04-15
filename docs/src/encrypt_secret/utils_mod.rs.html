@@ -3,7 +3,83 @@
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../encrypt_secret/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
+<a href="#4" id="4">4</a>
+<a href="#5" id="5">5</a>
+<a href="#6" id="6">6</a>
+<a href="#7" id="7">7</a>
+<a href="#8" id="8">8</a>
+<a href="#9" id="9">9</a>
+<a href="#10" id="10">10</a>
+<a href="#11" id="11">11</a>
+<a href="#12" id="12">12</a>
+<a href="#13" id="13">13</a>
+<a href="#14" id="14">14</a>
+<a href="#15" id="15">15</a>
+<a href="#16" id="16">16</a>
+<a href="#17" id="17">17</a>
+<a href="#18" id="18">18</a>
+<a href="#19" id="19">19</a>
+<a href="#20" id="20">20</a>
+<a href="#21" id="21">21</a>
+<a href="#22" id="22">22</a>
+<a href="#23" id="23">23</a>
+<a href="#24" id="24">24</a>
+<a href="#25" id="25">25</a>
+<a href="#26" id="26">26</a>
+<a href="#27" id="27">27</a>
+<a href="#28" id="28">28</a>
+<a href="#29" id="29">29</a>
+<a href="#30" id="30">30</a>
+<a href="#31" id="31">31</a>
+<a href="#32" id="32">32</a>
+<a href="#33" id="33">33</a>
+<a href="#34" id="34">34</a>
+<a href="#35" id="35">35</a>
+<a href="#36" id="36">36</a>
+<a href="#37" id="37">37</a>
+<a href="#38" id="38">38</a>
+<a href="#39" id="39">39</a>
+<a href="#40" id="40">40</a>
+<a href="#41" id="41">41</a>
 </pre></div><pre class="rust"><code><span class="comment">// utils_mod.rs
 
 </span><span class="doccomment">//! various utilities
-</span></code></pre></div></section></main></body></html>
+
+</span><span class="kw">use </span>std::str::FromStr;
+
+<span class="comment">// region: Public API constants
+// ANSI colors for Linux terminal
+// https://github.com/shiena/ansicolor/blob/master/README.md
+</span><span class="doccomment">/// ANSI color
+</span><span class="kw">pub const </span>RED: <span class="kw-2">&amp;</span>str = <span class="string">"\x1b[31m"</span>;
+<span class="doccomment">/// ANSI color
+</span><span class="kw">pub const </span>GREEN: <span class="kw-2">&amp;</span>str = <span class="string">"\x1b[32m"</span>;
+<span class="doccomment">/// ANSI color
+</span><span class="kw">pub const </span>YELLOW: <span class="kw-2">&amp;</span>str = <span class="string">"\x1b[33m"</span>;
+<span class="doccomment">/// ANSI color
+</span><span class="kw">pub const </span>BLUE: <span class="kw-2">&amp;</span>str = <span class="string">"\x1b[34m"</span>;
+<span class="doccomment">/// ANSI color
+</span><span class="kw">pub const </span>RESET: <span class="kw-2">&amp;</span>str = <span class="string">"\x1b[0m"</span>;
+<span class="comment">// endregion: Public API constants
+
+</span><span class="doccomment">/// home_dir() using the home crate
+/// panics if HOME not found
+</span><span class="kw">pub fn </span>home_dir() -&gt; camino::Utf8PathBuf {
+    <span class="kw">match </span>home::home_dir() {
+        <span class="prelude-val">Some</span>(path_buff) =&gt; {
+            <span class="kw">if </span>!path_buff.as_os_str().is_empty() {
+                camino::Utf8PathBuf::from_path_buf(path_buff).unwrap()
+            } <span class="kw">else </span>{
+                <span class="macro">panic!</span>(<span class="string">"{RED}Unable to get your home dir!{RESET}"</span>);
+            }
+        }
+        <span class="prelude-val">None </span>=&gt; <span class="macro">panic!</span>(<span class="string">"{RED}Unable to get your home dir!{RESET}"</span>),
+    }
+}
+
+<span class="doccomment">/// Expands the ~ for home_dir and returns expanded path as str
+</span><span class="kw">pub fn </span>file_path_home_expand(file_path: <span class="kw-2">&amp;</span>camino::Utf8Path) -&gt; camino::Utf8PathBuf {
+    <span class="kw">let </span>replaced = file_path.as_str().replace(<span class="string">"~"</span>, home_dir().as_str());
+    camino::Utf8PathBuf::from_str(<span class="kw-2">&amp;</span>replaced).unwrap()
+}
+</code></pre></div></section></main></body></html>

@@ -79,11 +79,24 @@
 <a href="#77" id="77">77</a>
 <a href="#78" id="78">78</a>
 <a href="#79" id="79">79</a>
+<a href="#80" id="80">80</a>
+<a href="#81" id="81">81</a>
+<a href="#82" id="82">82</a>
+<a href="#83" id="83">83</a>
+<a href="#84" id="84">84</a>
+<a href="#85" id="85">85</a>
+<a href="#86" id="86">86</a>
+<a href="#87" id="87">87</a>
+<a href="#88" id="88">88</a>
+<a href="#89" id="89">89</a>
+<a href="#90" id="90">90</a>
+<a href="#91" id="91">91</a>
+<a href="#92" id="92">92</a>
 </pre></div><pre class="rust"><code><span class="comment">// region: auto_md_to_doc_comments include README.md A //!
 </span><span class="doccomment">//! # encrypt_secret
 //!
 //! **Library to encrypt/decrypt secrets**  
-//! ***version: 0.1.40 date: 2024-04-15 author: [bestia.dev](https://bestia.dev) repository: [Github](https://github.com/automation-tasks-rs/encrypt_secret)***  
+//! ***version: 0.1.45 date: 2024-04-15 author: [bestia.dev](https://bestia.dev) repository: [Github](https://github.com/automation-tasks-rs/encrypt_secret)***  
 //!
 //!  [![crates.io](https://img.shields.io/crates/v/encrypt_secret.svg)](https://crates.io/crates/encrypt_secret)
 //!  [![Documentation](https://docs.rs/encrypt_secret/badge.svg)](https://docs.rs/encrypt_secret/)
@@ -92,11 +105,11 @@
 //!  [![Rust](https://github.com/bestia-dev/encrypt_secret/workflows/RustAction/badge.svg)](https://github.com/bestia-dev/encrypt_secret/)
 //!  ![Hits](https://bestia.dev/webpage_hit_counter/get_svg_image/1785154337.svg)
 //!
-//! [![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-70-green.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-//! [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-83-blue.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-//! [![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-12-purple.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-240-green.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-164-blue.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-34-purple.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
 //! [![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-//! [![Lines in tests](https://img.shields.io/badge/Lines_in_tests-72-orange.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in tests](https://img.shields.io/badge/Lines_in_tests-86-orange.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
 //!
 //! Hashtags: #rustlang #buildtool #developmenttool #github  
 //! My projects on GitHub are more like a tutorial than a finished product: [bestia-dev tutorials](https://github.com/bestia-dev/tutorials_rust_wasm).
@@ -129,6 +142,16 @@
 //!
 //! We use a passcode to encrypt a string.
 //!
+//! ## Create an SSH key
+//!
+//! It is recommended to encrypt the API token with a dedicated SSH key. This way you have granular control how to use it.
+//!
+//! ```bash
+//! ssh-keygen -t ed25519 -C "github api token"
+//! # file name: /home/rustdevuser/.ssh/github_api_token_ssh_1
+//! # enter passphrase 2 times
+//! ```
+//!
 //!
 //! ## Open-source and free as a beer
 //!
@@ -147,15 +170,18 @@
 </span><span class="comment">// endregion: auto_md_to_doc_comments include README.md A //!
 
 // region: mod, extern and use statements
-</span><span class="kw">mod </span>symmetric_mod;
+</span><span class="kw">mod </span>ssh_mod;
+<span class="kw">mod </span>ssh_sign_crypt_mod;
+<span class="kw">mod </span>symmetric_crypt_mod;
 <span class="kw">mod </span>utils_mod;
 
-<span class="comment">// reexport functions for callers of the library
+<span class="comment">// reexport types and functions for callers of the library
+</span><span class="kw">pub use </span>symmetric_crypt_mod::EncryptedString;
 
-</span><span class="kw">pub use </span>symmetric_mod::decrypt_symmetric;
-<span class="kw">pub use </span>symmetric_mod::decrypt_symmetric_with_password;
-<span class="kw">pub use </span>symmetric_mod::encrypt_symmetric;
-<span class="kw">pub use </span>symmetric_mod::encrypt_symmetric_with_password;
-
-<span class="kw">pub use </span>symmetric_mod::EncryptedString;
+<span class="kw">pub use </span>ssh_sign_crypt_mod::decrypt_with_ssh_interactive_from_file;
+<span class="kw">pub use </span>ssh_sign_crypt_mod::encrypt_with_ssh_interactive_save_file;
+<span class="kw">pub use </span>symmetric_crypt_mod::decrypt_symmetric;
+<span class="kw">pub use </span>symmetric_crypt_mod::decrypt_symmetric_with_password;
+<span class="kw">pub use </span>symmetric_crypt_mod::encrypt_symmetric;
+<span class="kw">pub use </span>symmetric_crypt_mod::encrypt_symmetric_with_password;
 </code></pre></div></section></main></body></html>
