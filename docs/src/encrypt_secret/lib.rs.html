@@ -1,0 +1,147 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="encrypt_secret" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.1 (7cf61ebde 2024-03-27)" data-channel="1.77.1" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../encrypt_secret/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<a href="#2" id="2">2</a>
+<a href="#3" id="3">3</a>
+<a href="#4" id="4">4</a>
+<a href="#5" id="5">5</a>
+<a href="#6" id="6">6</a>
+<a href="#7" id="7">7</a>
+<a href="#8" id="8">8</a>
+<a href="#9" id="9">9</a>
+<a href="#10" id="10">10</a>
+<a href="#11" id="11">11</a>
+<a href="#12" id="12">12</a>
+<a href="#13" id="13">13</a>
+<a href="#14" id="14">14</a>
+<a href="#15" id="15">15</a>
+<a href="#16" id="16">16</a>
+<a href="#17" id="17">17</a>
+<a href="#18" id="18">18</a>
+<a href="#19" id="19">19</a>
+<a href="#20" id="20">20</a>
+<a href="#21" id="21">21</a>
+<a href="#22" id="22">22</a>
+<a href="#23" id="23">23</a>
+<a href="#24" id="24">24</a>
+<a href="#25" id="25">25</a>
+<a href="#26" id="26">26</a>
+<a href="#27" id="27">27</a>
+<a href="#28" id="28">28</a>
+<a href="#29" id="29">29</a>
+<a href="#30" id="30">30</a>
+<a href="#31" id="31">31</a>
+<a href="#32" id="32">32</a>
+<a href="#33" id="33">33</a>
+<a href="#34" id="34">34</a>
+<a href="#35" id="35">35</a>
+<a href="#36" id="36">36</a>
+<a href="#37" id="37">37</a>
+<a href="#38" id="38">38</a>
+<a href="#39" id="39">39</a>
+<a href="#40" id="40">40</a>
+<a href="#41" id="41">41</a>
+<a href="#42" id="42">42</a>
+<a href="#43" id="43">43</a>
+<a href="#44" id="44">44</a>
+<a href="#45" id="45">45</a>
+<a href="#46" id="46">46</a>
+<a href="#47" id="47">47</a>
+<a href="#48" id="48">48</a>
+<a href="#49" id="49">49</a>
+<a href="#50" id="50">50</a>
+<a href="#51" id="51">51</a>
+<a href="#52" id="52">52</a>
+<a href="#53" id="53">53</a>
+<a href="#54" id="54">54</a>
+<a href="#55" id="55">55</a>
+<a href="#56" id="56">56</a>
+<a href="#57" id="57">57</a>
+<a href="#58" id="58">58</a>
+<a href="#59" id="59">59</a>
+<a href="#60" id="60">60</a>
+<a href="#61" id="61">61</a>
+<a href="#62" id="62">62</a>
+<a href="#63" id="63">63</a>
+<a href="#64" id="64">64</a>
+<a href="#65" id="65">65</a>
+<a href="#66" id="66">66</a>
+<a href="#67" id="67">67</a>
+<a href="#68" id="68">68</a>
+<a href="#69" id="69">69</a>
+<a href="#70" id="70">70</a>
+<a href="#71" id="71">71</a>
+<a href="#72" id="72">72</a>
+</pre></div><pre class="rust"><code><span class="comment">// region: auto_md_to_doc_comments include README.md A //!
+</span><span class="doccomment">//! # encrypt_secret
+//!
+//! **Library to encrypt/decrypt secrets**  
+//! ***version: 0.1.37 date: 2024-04-15 author: [bestia.dev](https://bestia.dev) repository: [Github](https://github.com/bestia-dev/encrypt_secret)***  
+//!
+//! [![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-87-green.svg)]()
+//! [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-78-blue.svg)]()
+//! [![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-11-purple.svg)]()
+//! [![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)]()
+//! [![Lines in tests](https://img.shields.io/badge/Lines_in_tests-77-orange.svg)]()
+//!
+//! [![crates.io](https://img.shields.io/crates/v/encrypt_secret.svg)](https://crates.io/crates/encrypt_secret) [![Documentation](https://docs.rs/encrypt_secret/badge.svg)](https://docs.rs/encrypt_secret/) [![crev reviews](https://web.crev.dev/rust-reviews/badge/crev_count/encrypt_secret.svg)](https://web.crev.dev/rust-reviews/crate/encrypt_secret/) [![Lib.rs](https://img.shields.io/badge/Lib.rs-rust-orange.svg)](https://lib.rs/crates/encrypt_secret/) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/encrypt_secret/blob/master/LICENSE) [![Rust](https://github.com/bestia-dev/encrypt_secret/workflows/RustAction/badge.svg)](https://github.com/bestia-dev/encrypt_secret/) ![Hits](https://bestia.dev/webpage_hit_counter/get_svg_image/1785154337.svg)
+//!
+//! Hashtags: #rustlang #buildtool #developmenttool #github  
+//! My projects on GitHub are more like a tutorial than a finished product: [bestia-dev tutorials](https://github.com/bestia-dev/tutorials_rust_wasm).
+//!
+//! ## Secrets
+//!
+//! When we write an application, every connection to any server needs to work with secrets: passwords, passkeys, passcodes, passphrases, API tokens and more.
+//!
+//! Sometimes it is just fine to let the user type the password. Passwords are easy for humans to remember and type. But they are the least secure.
+//!
+//! It is much better to have a long random "key" string like the API token, but no human is capable of remembering that. It means we need to store it somewhere.
+//!
+//! It is theoretically impossible to store this secret 100% securely using only software. Modern computers use special chips for that. But we can make it hard and not obvious for an attacker to get the secret.
+//!
+//! ## GitHub API token
+//!
+//! The GitHub API token is a secret just like a password. Maybe even greater.  
+//! With this API token, a maleficent actor can change basically anything in your GitHub account. You don't want that.
+//!
+//! How to protect this secret?  
+//! Ok, there are some basic recommendations:
+//!
+//! - Give the least permission/authorization to the API token to minimize the harm an attacker can do
+//! - Expire the token frequently, so old tokens are of no use
+//! - HTTPS is a no-brainer. Never use HTTP ever again. It is plain text over the wire.
+//! - Never store the token in a file as plain text
+//! - Plain text inside env vars can also be accessed from malware
+//!
+//! ## Symmetric encryption
+//!
+//! We use a passcode to encrypt a string.
+//!
+//!
+//! ## Open-source and free as a beer
+//!
+//! My open-source projects are free as a beer (MIT license).  
+//! I just love programming.  
+//! But I need also to drink. If you find my projects and tutorials helpful, please buy me a beer by donating to my [PayPal](https://paypal.me/LucianoBestia).  
+//! You know the price of a beer in your local bar ;-)  
+//! So I can drink a free beer for your health :-)  
+//! [Na zdravje!](https://translate.google.com/?hl=en&amp;sl=sl&amp;tl=en&amp;text=Na%20zdravje&amp;op=translate) [Alla salute!](https://dictionary.cambridge.org/dictionary/italian-english/alla-salute) [Prost!](https://dictionary.cambridge.org/dictionary/german-english/prost) [Nazdravlje!](https://matadornetwork.com/nights/how-to-say-cheers-in-50-languages/) 🍻
+//!
+//! [//bestia.dev](https://bestia.dev)  
+//! [//github.com/bestia-dev](https://github.com/bestia-dev)  
+//! [//bestiadev.substack.com](https://bestiadev.substack.com)  
+//! [//youtube.com/@bestia-dev-tutorials](https://youtube.com/@bestia-dev-tutorials)  
+//!
+</span><span class="comment">// endregion: auto_md_to_doc_comments include README.md A //!
+
+// region: mod, extern and use statements
+</span><span class="kw">mod </span>symmetric_mod;
+<span class="kw">mod </span>utils_mod;
+
+<span class="comment">// reexport functions for callers of the library
+
+</span><span class="kw">pub use </span>symmetric_mod::decrypt_symmetric;
+<span class="kw">pub use </span>symmetric_mod::decrypt_symmetric_with_password;
+<span class="kw">pub use </span>symmetric_mod::encrypt_symmetric;
+<span class="kw">pub use </span>symmetric_mod::encrypt_symmetric_with_password;
+</code></pre></div></section></main></body></html>
