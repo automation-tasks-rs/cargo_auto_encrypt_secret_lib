@@ -1,6 +1,6 @@
 [package]
 name = "encrypt_secret"
-version = "0.1.39"
+version = "0.1.40"
 authors = ["bestia.dev"]
 homepage = "https://bestia.dev"
 edition = "2021"
@@ -22,8 +22,8 @@ include = [
 [dependencies]
 secrecy = { version="0.8.0", features=["alloc"]}
 argon2 = "0.5.3"
-ssh-key = { version = "0.6.4", features = [ "rsa", "encryption"] }
-ssh-agent-client-rs = "0.9.0"
+ssh-key = { version = "0.6.6", features = [ "rsa", "encryption"] }
+ssh-agent-client-rs = "0.9.1"
 rsa = { version = "0.9.6", features = ["sha2","pem"] }
 zeroize = "1.7.0"
 aes-gcm = "0.10.3"

@@ -2,7 +2,7 @@
 //! # encrypt_secret
 //!
 //! **Library to encrypt/decrypt secrets**  
-//! ***version: 0.1.39 date: 2024-04-15 author: [bestia.dev](https://bestia.dev) repository: [Github](https://github.com/automation-tasks-rs/encrypt_secret)***  
+//! ***version: 0.1.40 date: 2024-04-15 author: [bestia.dev](https://bestia.dev) repository: [Github](https://github.com/automation-tasks-rs/encrypt_secret)***  
 //!
 //!  [![crates.io](https://img.shields.io/crates/v/encrypt_secret.svg)](https://crates.io/crates/encrypt_secret)
 //!  [![Documentation](https://docs.rs/encrypt_secret/badge.svg)](https://docs.rs/encrypt_secret/)
@@ -11,8 +11,8 @@
 //!  [![Rust](https://github.com/bestia-dev/encrypt_secret/workflows/RustAction/badge.svg)](https://github.com/bestia-dev/encrypt_secret/)
 //!  ![Hits](https://bestia.dev/webpage_hit_counter/get_svg_image/1785154337.svg)
 //!
-//! [![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-68-green.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-//! [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-78-blue.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-70-green.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-83-blue.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
 //! [![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-12-purple.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
 //! [![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
 //! [![Lines in tests](https://img.shields.io/badge/Lines_in_tests-72-orange.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
