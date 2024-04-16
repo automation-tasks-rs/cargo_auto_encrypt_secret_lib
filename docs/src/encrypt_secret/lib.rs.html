@@ -182,13 +182,15 @@
 <a href="#128" id="128">128</a>
 <a href="#129" id="129">129</a>
 <a href="#130" id="130">130</a>
+<a href="#131" id="131">131</a>
+<a href="#132" id="132">132</a>
 </pre>
         </div>
         <pre class="rust"><code><span class="comment">// region: auto_md_to_doc_comments include README.md A //!
 </span><span class="doccomment">//! # encrypt_secret
 //!
 //! **Library to encrypt/decrypt secrets**  
-//! ***version: 1.0.3 date: 2024-04-16 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/automation-tasks-rs/encrypt_secret)***
+//! ***version: 1.0.4 date: 2024-04-16 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/automation-tasks-rs/encrypt_secret)***
 //!
 //!  ![rust](https://img.shields.io/badge/rust-orange)
 //!  ![work-in-progress](https://img.shields.io/badge/work_in_progress-yellow)
@@ -200,11 +202,11 @@
 //!  [![Rust](https://github.com/bestia-dev/encrypt_secret/workflows/RustAction/badge.svg)](https://github.com/bestia-dev/encrypt_secret/)
 //!  ![Hits](https://bestia.dev/webpage_hit_counter/get_svg_image/1785154337.svg)
 //!
-//! [![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-155-green.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-//! [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-214-blue.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-//! [![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-34-purple.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-//! [![Lines in examples](https://img.shields.io/badge/Lines_in_examples-22-yellow.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-//! [![Lines in tests](https://img.shields.io/badge/Lines_in_tests-148-orange.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-151-green.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-183-blue.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-17-purple.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in tests](https://img.shields.io/badge/Lines_in_tests-1-orange.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
 //!
 //! Hashtags: #rustlang 
 //! My projects on GitHub are more like a tutorial than a finished product: [bestia-dev tutorials](https://github.com/bestia-dev/tutorials_rust_wasm).
@@ -302,18 +304,20 @@
 // region: mod, extern and use statements
 </span><span class="kw">mod </span>ssh_mod;
 <span class="kw">mod </span>ssh_sign_crypt_mod;
-<span class="kw">mod </span>symmetric_crypt_mod;
 <span class="kw">mod </span>utils_mod;
 
-<span class="comment">// reexport types and functions for callers of the library
-</span><span class="kw">pub use </span>symmetric_crypt_mod::EncryptedString;
+<span class="doccomment">/// A simple wrapper new-type around String just to show intent that it is already encrypted
+</span><span class="kw">pub struct </span>EncryptedString(<span class="kw">pub </span>String);
 
+<span class="comment">// reexport types and functions for callers of the library
+</span><span class="kw">pub use </span>ssh_sign_crypt_mod::SshContextTrait;
+
+<span class="kw">pub use </span>ssh_mod::crate_ssh_agent_client;
+<span class="kw">pub use </span>ssh_mod::get_fingerprint_from_file;
+<span class="kw">pub use </span>ssh_mod::ssh_add_list_contains_fingerprint;
 <span class="kw">pub use </span>ssh_sign_crypt_mod::decrypt_with_ssh_interactive_from_file;
 <span class="kw">pub use </span>ssh_sign_crypt_mod::encrypt_with_ssh_interactive_save_file;
-<span class="kw">pub use </span>symmetric_crypt_mod::decrypt_symmetric;
-<span class="kw">pub use </span>symmetric_crypt_mod::decrypt_symmetric_with_password;
-<span class="kw">pub use </span>symmetric_crypt_mod::encrypt_symmetric;
-<span class="kw">pub use </span>symmetric_crypt_mod::encrypt_symmetric_with_password;
+<span class="kw">pub use </span>utils_mod::file_path_home_expand;
 </code></pre>
       </div>
     </section>

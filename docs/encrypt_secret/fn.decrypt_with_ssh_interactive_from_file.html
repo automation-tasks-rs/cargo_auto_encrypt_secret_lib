@@ -29,7 +29,7 @@
   <nav class="mobile-topbar"></nav>
   <nav class="sidebar">
     <div class="sidebar-crate">
-      <h2><a href="../encrypt_secret/index.html">encrypt_secret</a><span class="version">1.0.3</span></h2>
+      <h2><a href="../encrypt_secret/index.html">encrypt_secret</a><span class="version">1.0.4</span></h2>
     </div>
     <div class="sidebar-elems"></div>
   </nav>
@@ -54,21 +54,22 @@
         <div class="main-heading">
           <h1>Function <a href="index.html">encrypt_secret</a>::<wbr><a class="fn" href="#">decrypt_with_ssh_interactive_from_file</a><button id="copy-path"
           title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt=
-          "Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/encrypt_secret/ssh_sign_crypt_mod.rs.html#125-156">source</a> ·
+          "Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/encrypt_secret/ssh_sign_crypt_mod.rs.html#109-136">source</a> ·
           <button id="toggle-all-docs" title="collapse all docs">[<span>−</span>]</button></span>
         </div>
         <pre class="rust item-decl"><code>pub fn decrypt_with_ssh_interactive_from_file(
+    ssh_context: &amp;mut impl <a class="trait" href="ssh_sign_crypt_mod/trait.SshContextTrait.html" title=
+"trait encrypt_secret::ssh_sign_crypt_mod::SshContextTrait">SshContextTrait</a>,
     encrypted_string_file_path: &amp;Utf8Path
-) -&gt; <a class="enum" href="https://doc.rust-lang.org/1.77.1/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="type"
-href="https://docs.rs/secrecy/0.8.0/secrecy/string/type.SecretString.html" title="type secrecy::string::SecretString">SecretString</a>&gt;</code></pre>
+)</code></pre>
         <details class="toggle top-doc" open="">
           <summary class="hideme">
             <span>Expand description</span>
           </summary>
           <div class="docblock">
             <p>Decrypt token from file (json encoded in Base64) with the chosen ssh_identity</p>
-            <p>For better user-experience, use ssh-add to put SSH identity into ssh-agent. WARNING: using ssh-agent is less secure explicitly because there is
-            no need for user interaction.</p>
+            <p>The decrypted secret is stored in the ssh_context For better user-experience, use ssh-add to put SSH identity into ssh-agent. WARNING: using
+            ssh-agent is less secure explicitly because there is no need for user interaction.</p>
           </div>
         </details>
       </section>

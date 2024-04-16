@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="generator" content="rustdoc">
-  <meta name="description" content="Encrypts secret_string with secret_passcode_bytes">
-  <title>encrypt_symmetric in encrypt_secret - Rust</title>
+  <meta name="description" content="Get the fingerprint of a public key">
+  <title>get_fingerprint_from_file in encrypt_secret - Rust</title>
   <link rel="preload" as="font" type="font/woff2" crossorigin="" href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin="" href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin="" href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2">
@@ -29,7 +29,7 @@
   <nav class="mobile-topbar"></nav>
   <nav class="sidebar">
     <div class="sidebar-crate">
-      <h2><a href="../encrypt_secret/index.html">encrypt_secret</a><span class="version">1.0.3</span></h2>
+      <h2><a href="../encrypt_secret/index.html">encrypt_secret</a><span class="version">1.0.4</span></h2>
     </div>
     <div class="sidebar-elems"></div>
   </nav>
@@ -52,25 +52,21 @@
       </nav>
       <section id="main-content" class="content">
         <div class="main-heading">
-          <h1>Function <a href="index.html">encrypt_secret</a>::<wbr><a class="fn" href="#">encrypt_symmetric</a><button id="copy-path" title=
+          <h1>Function <a href="index.html">encrypt_secret</a>::<wbr><a class="fn" href="#">get_fingerprint_from_file</a><button id="copy-path" title=
           "Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt=
-          "Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/encrypt_secret/symmetric_crypt_mod.rs.html#13-30">source</a> ·
-          <button id="toggle-all-docs" title="collapse all docs">[<span>−</span>]</button></span>
+          "Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/encrypt_secret/ssh_mod.rs.html#10-18">source</a> · <button id=
+          "toggle-all-docs" title="collapse all docs">[<span>−</span>]</button></span>
         </div>
-        <pre class="rust item-decl"><code>pub fn encrypt_symmetric(
-    secret_string: &<a class="type" href="https://docs.rs/secrecy/0.8.0/secrecy/string/type.SecretString.html" title=
-"type secrecy::string::SecretString">SecretString</a>,
-    secret_passcode_bytes: &<a class="type" href="https://docs.rs/secrecy/0.8.0/secrecy/vec/type.SecretVec.html" title=
-"type secrecy::vec::SecretVec">SecretVec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.77.1/std/primitive.u8.html">u8</a>&gt;
-) -&gt; <a class="enum" href="https://doc.rust-lang.org/1.77.1/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct"
-href="symmetric_crypt_mod/struct.EncryptedString.html" title="struct encrypt_secret::symmetric_crypt_mod::EncryptedString">EncryptedString</a>&gt;</code></pre>
+        <pre class="rust item-decl"><code>pub fn get_fingerprint_from_file(
+    identity_private_file_path: &amp;Utf8Path
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/1.77.1/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code></pre>
         <details class="toggle top-doc" open="">
           <summary class="hideme">
             <span>Expand description</span>
           </summary>
           <div class="docblock">
-            <p>Encrypts secret_string with secret_passcode_bytes</p>
-            <p>secret_passcode_bytes must be 32 bytes or more returns the encrypted_string</p>
+            <p>Get the fingerprint of a public key</p>
+            <p>The parameter is the filepath of the private key. But the code then uses the public key to calculate the fingerprint.</p>
           </div>
         </details>
       </section>
