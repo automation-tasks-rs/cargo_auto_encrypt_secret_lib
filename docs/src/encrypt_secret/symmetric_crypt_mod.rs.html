@@ -1,6 +1,58 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/symmetric_crypt_mod.rs`."><title>symmetric_crypt_mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="encrypt_secret" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.1 (7cf61ebde 2024-03-27)" data-channel="1.77.1" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../encrypt_secret/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="rustdoc">
+  <meta name="description" content="Source of the Rust file `src/symmetric_crypt_mod.rs`.">
+  <title>symmetric_crypt_mod.rs - source</title>
+  <link rel="preload" as="font" type="font/woff2" crossorigin="" href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin="" href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin="" href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin="" href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin="" href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">
+  <link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css">
+  <link rel="stylesheet" href="../../static.files/rustdoc-5bc39a1768837dd0.css">
+  <meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="encrypt_secret" data-themes=""
+  data-resource-suffix="" data-rustdoc-version="1.77.1 (7cf61ebde 2024-03-27)" data-channel="1.77.1" data-search-js="search-dd67cee4cfa65049.js"
+  data-settings-js="settings-4313503d2e1961c2.js">
+  <script src="../../static.files/storage-4c98445ec4002617.js"></script>
+  <script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script>
+  <script defer src="../../src-files.js"></script>
+  <script defer src="../../static.files/main-48f368f3872407c8.js"></script><noscript>
+  <link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript>
+  <link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png">
+  <link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png">
+  <link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg">
+</head>
+<body class="rustdoc src">
+  <!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+  <nav class="sidebar">
+    <div class="src-sidebar-title">
+      <h2>Files</h2>
+    </div>
+  </nav>
+  <div class="sidebar-resizer"></div>
+  <main>
+    <nav class="sub">
+      <form class="search-form">
+        <div id="sidebar-button" tabindex="-1">
+          <a href="../../encrypt_secret/all.html" title="show sidebar"></a>
+        </div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder=
+        "Click or press ‘S’ to search, ‘?’ for more options…" type="search">
+        <div id="help-button" tabindex="-1">
+          <a href="../../help.html" title="help">?</a>
+        </div>
+        <div id="settings-menu" tabindex="-1">
+          <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src=
+          "../../static.files/wheel-7b819b6101059cd0.svg"></a>
+        </div>
+      </form>
+    </nav>
+    <section id="main-content" class="content">
+      <div class="example-wrap">
+        <div data-nosnippet="">
+          <pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -96,7 +148,9 @@
 <a href="#94" id="94">94</a>
 <a href="#95" id="95">95</a>
 <a href="#96" id="96">96</a>
-</pre></div><pre class="rust"><code><span class="comment">// symmetric_crypt_mod.rs
+</pre>
+        </div>
+        <pre class="rust"><code><span class="comment">// symmetric_crypt_mod.rs
 
 // bring trait into scope
 </span><span class="kw">use </span>secrecy::ExposeSecret;
@@ -108,22 +162,29 @@
 ///
 /// secret_passcode_bytes must be 32 bytes or more
 /// returns the encrypted_string
-</span><span class="kw">pub fn </span>encrypt_symmetric(secret_string: <span class="kw-2">&amp;</span>secrecy::SecretString, secret_passcode_bytes: <span class="kw-2">&amp;</span>secrecy::SecretVec&lt;u8&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;EncryptedString&gt; {
+</span><span class="kw">pub fn </span>encrypt_symmetric(secret_string: <span class="kw-2">&</span>secrecy::SecretString, secret_passcode_bytes: <span class=
+"kw-2">&</span>secrecy::SecretVec&lt;u8&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;EncryptedString&gt; {
     <span class="comment">//only first 32 bytes
-    </span><span class="kw">let </span><span class="kw-2">mut </span>secret_passcode_32bytes = [<span class="number">0u8</span>; <span class="number">32</span>];
-    secret_passcode_32bytes.copy_from_slice(<span class="kw-2">&amp;</span>secret_passcode_bytes.expose_secret()[<span class="number">0</span>..<span class="number">32</span>]);
+    </span><span class="kw">let </span><span class="kw-2">mut </span>secret_passcode_32bytes = [<span class="number">0u8</span>; <span class=
+"number">32</span>];
+    secret_passcode_32bytes.copy_from_slice(<span class="kw-2">&</span>secret_passcode_bytes.expose_secret()[<span class="number">0</span>..<span class=
+"number">32</span>]);
 
-    <span class="kw">let </span>cipher = &lt;aes_gcm::Aes256Gcm <span class="kw">as </span>aes_gcm::KeyInit&gt;::new(<span class="kw-2">&amp;</span>secret_passcode_32bytes.into());
+    <span class="kw">let </span>cipher = &lt;aes_gcm::Aes256Gcm <span class="kw">as </span>aes_gcm::KeyInit&gt;::new(<span class=
+"kw-2">&</span>secret_passcode_32bytes.into());
     <span class="comment">// nonce is salt
-    </span><span class="kw">let </span>nonce = &lt;aes_gcm::Aes256Gcm <span class="kw">as </span>aes_gcm::AeadCore&gt;::generate_nonce(<span class="kw-2">&amp;mut </span>aes_gcm::aead::OsRng);
+    </span><span class="kw">let </span>nonce = &lt;aes_gcm::Aes256Gcm <span class="kw">as </span>aes_gcm::AeadCore&gt;::generate_nonce(<span class=
+"kw-2">&amp;mut </span>aes_gcm::aead::OsRng);
 
-    <span class="kw">let </span><span class="prelude-val">Ok</span>(ciphertext) = aes_gcm::aead::Aead::encrypt(<span class="kw-2">&amp;</span>cipher, <span class="kw-2">&amp;</span>nonce, secret_string.expose_secret().as_bytes()) <span class="kw">else </span>{
+    <span class="kw">let </span><span class="prelude-val">Ok</span>(ciphertext) = aes_gcm::aead::Aead::encrypt(<span class="kw-2">&</span>cipher, <span class=
+"kw-2">&</span>nonce, secret_string.expose_secret().as_bytes()) <span class="kw">else </span>{
         <span class="kw">return </span><span class="prelude-val">None</span>;
     };
 
     <span class="kw">let </span><span class="kw-2">mut </span>encrypted_bytes = nonce.to_vec();
-    encrypted_bytes.extend_from_slice(<span class="kw-2">&amp;</span>ciphertext);
-    <span class="kw">let </span>encrypted_string = &lt;base64ct::Base64 <span class="kw">as </span>base64ct::Encoding&gt;::encode_string(<span class="kw-2">&amp;</span>encrypted_bytes);
+    encrypted_bytes.extend_from_slice(<span class="kw-2">&</span>ciphertext);
+    <span class="kw">let </span>encrypted_string = &lt;base64ct::Base64 <span class="kw">as </span>base64ct::Encoding&gt;::encode_string(<span class=
+"kw-2">&</span>encrypted_bytes);
     <span class="prelude-val">Some</span>(EncryptedString(encrypted_string))
 }
 
@@ -131,18 +192,25 @@
 ///
 /// secret_passcode_bytes must be 32 bytes or more
 /// Returns the secret_string
-</span><span class="kw">pub fn </span>decrypt_symmetric(encrypted_string: <span class="kw-2">&amp;</span>EncryptedString, secret_passcode_bytes: <span class="kw-2">&amp;</span>secrecy::SecretVec&lt;u8&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;secrecy::SecretString&gt; {
-    <span class="kw">let </span>encrypted_bytes = &lt;base64ct::Base64 <span class="kw">as </span>base64ct::Encoding&gt;::decode_vec(<span class="kw-2">&amp;</span>encrypted_string.<span class="number">0</span>).unwrap();
+</span><span class="kw">pub fn </span>decrypt_symmetric(encrypted_string: <span class="kw-2">&</span>EncryptedString, secret_passcode_bytes: <span class=
+"kw-2">&</span>secrecy::SecretVec&lt;u8&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;secrecy::SecretString&gt; {
+    <span class="kw">let </span>encrypted_bytes = &lt;base64ct::Base64 <span class="kw">as </span>base64ct::Encoding&gt;::decode_vec(<span class=
+"kw-2">&</span>encrypted_string.<span class="number">0</span>).unwrap();
     <span class="comment">//only first 32 bytes
-    </span><span class="kw">let </span><span class="kw-2">mut </span>secret_passcode_32bytes = [<span class="number">0u8</span>; <span class="number">32</span>];
-    secret_passcode_32bytes.copy_from_slice(<span class="kw-2">&amp;</span>secret_passcode_bytes.expose_secret()[<span class="number">0</span>..<span class="number">32</span>]);
+    </span><span class="kw">let </span><span class="kw-2">mut </span>secret_passcode_32bytes = [<span class="number">0u8</span>; <span class=
+"number">32</span>];
+    secret_passcode_32bytes.copy_from_slice(<span class="kw-2">&</span>secret_passcode_bytes.expose_secret()[<span class="number">0</span>..<span class=
+"number">32</span>]);
 
-    <span class="kw">let </span>cipher = &lt;aes_gcm::Aes256Gcm <span class="kw">as </span>aes_gcm::KeyInit&gt;::new(<span class="kw-2">&amp;</span>secret_passcode_32bytes.into());
+    <span class="kw">let </span>cipher = &lt;aes_gcm::Aes256Gcm <span class="kw">as </span>aes_gcm::KeyInit&gt;::new(<span class=
+"kw-2">&</span>secret_passcode_32bytes.into());
     <span class="comment">// nonce is salt
-    </span><span class="kw">let </span>nonce = rsa::sha2::digest::generic_array::GenericArray::from_slice(<span class="kw-2">&amp;</span>encrypted_bytes[..<span class="number">12</span>]);
-    <span class="kw">let </span>ciphertext = <span class="kw-2">&amp;</span>encrypted_bytes[<span class="number">12</span>..];
+    </span><span class="kw">let </span>nonce = rsa::sha2::digest::generic_array::GenericArray::from_slice(<span class=
+"kw-2">&</span>encrypted_bytes[..<span class="number">12</span>]);
+    <span class="kw">let </span>ciphertext = <span class="kw-2">&</span>encrypted_bytes[<span class="number">12</span>..];
 
-    <span class="kw">let </span><span class="prelude-val">Ok</span>(decrypted_bytes) = aes_gcm::aead::Aead::decrypt(<span class="kw-2">&amp;</span>cipher, nonce, ciphertext) <span class="kw">else </span>{
+    <span class="kw">let </span><span class="prelude-val">Ok</span>(decrypted_bytes) = aes_gcm::aead::Aead::decrypt(<span class=
+"kw-2">&</span>cipher, nonce, ciphertext) <span class="kw">else </span>{
         <span class="kw">return </span><span class="prelude-val">None</span>;
     };
     <span class="kw">let </span>decrypted_string = String::from_utf8(decrypted_bytes).unwrap();
@@ -152,7 +220,7 @@
 <span class="doccomment">/// Converts a human readable password to a bytes passcode
 ///
 /// passcode is 32 bytes
-</span><span class="kw">fn </span>password_to_passcode(secret_password: <span class="kw-2">&amp;</span>str) -&gt; secrecy::SecretVec&lt;u8&gt; {
+</span><span class="kw">fn </span>password_to_passcode(secret_password: <span class="kw-2">&</span>str) -&gt; secrecy::SecretVec&lt;u8&gt; {
     <span class="kw">use </span>argon2::Argon2;
     <span class="comment">// the salt in this case can be constant
     </span><span class="kw">let </span>salt = <span class="string">b"constant_salt"</span>;
@@ -166,17 +234,21 @@
 <span class="doccomment">/// Encrypts secret_string with secret_password
 ///
 /// returns an Encrypted string
-</span><span class="kw">pub fn </span>encrypt_symmetric_with_password(secret_string: <span class="kw-2">&amp;</span>secrecy::SecretString, secret_password: <span class="kw-2">&amp;</span>secrecy::SecretString) -&gt; <span class="prelude-ty">Option</span>&lt;EncryptedString&gt; {
+</span><span class="kw">pub fn </span>encrypt_symmetric_with_password(secret_string: <span class=
+"kw-2">&</span>secrecy::SecretString, secret_password: <span class="kw-2">&</span>secrecy::SecretString) -&gt; <span class=
+"prelude-ty">Option</span>&lt;EncryptedString&gt; {
     <span class="kw">let </span>secret_passcode_bytes = password_to_passcode(secret_password.expose_secret());
-    encrypt_symmetric(secret_string, <span class="kw-2">&amp;</span>secret_passcode_bytes)
+    encrypt_symmetric(secret_string, <span class="kw-2">&</span>secret_passcode_bytes)
 }
 
 <span class="doccomment">/// Decrypts encrypted_string with secret_password
 ///
 /// Returns the secret_string
-</span><span class="kw">pub fn </span>decrypt_symmetric_with_password(encrypted_string: <span class="kw-2">&amp;</span>EncryptedString, secret_password: <span class="kw-2">&amp;</span>secrecy::SecretString) -&gt; <span class="prelude-ty">Option</span>&lt;secrecy::SecretString&gt; {
+</span><span class="kw">pub fn </span>decrypt_symmetric_with_password(encrypted_string: <span class=
+"kw-2">&</span>EncryptedString, secret_password: <span class="kw-2">&</span>secrecy::SecretString) -&gt; <span class=
+"prelude-ty">Option</span>&lt;secrecy::SecretString&gt; {
     <span class="kw">let </span>secret_passcode_bytes = password_to_passcode(secret_password.expose_secret());
-    decrypt_symmetric(encrypted_string, <span class="kw-2">&amp;</span>secret_passcode_bytes)
+    decrypt_symmetric(encrypted_string, <span class="kw-2">&</span>secret_passcode_bytes)
 }
 
 <span class="attr">#[cfg(test)]
@@ -187,9 +259,16 @@
     </span><span class="kw">fn </span>test_encrypt_decrypt() {
         <span class="kw">let </span>secret_string = secrecy::SecretString::new(<span class="string">"test test test"</span>.to_string());
         <span class="kw">let </span>secret_password = secrecy::SecretString::new(<span class="string">"password"</span>.to_string());
-        <span class="kw">let </span>encrypted_string = encrypt_symmetric_with_password(<span class="kw-2">&amp;</span>secret_string, <span class="kw-2">&amp;</span>secret_password).unwrap();
-        <span class="kw">let </span>decrypted_string = decrypt_symmetric_with_password(<span class="kw-2">&amp;</span>encrypted_string, <span class="kw-2">&amp;</span>secret_password).unwrap();
+        <span class="kw">let </span>encrypted_string = encrypt_symmetric_with_password(<span class="kw-2">&</span>secret_string, <span class=
+"kw-2">&</span>secret_password).unwrap();
+        <span class="kw">let </span>decrypted_string = decrypt_symmetric_with_password(<span class="kw-2">&</span>encrypted_string, <span class=
+"kw-2">&</span>secret_password).unwrap();
         <span class="macro">assert_eq!</span>(decrypted_string.expose_secret(), secret_string.expose_secret());
     }
 }
-</code></pre></div></section></main></body></html>
+</code></pre>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
