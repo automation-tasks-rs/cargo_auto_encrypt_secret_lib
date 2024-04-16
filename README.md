@@ -5,7 +5,7 @@
 [//]: # (auto_cargo_toml_to_md start)
 
 **Library to encrypt/decrypt secrets**  
-***version: 1.0.3 date: 2024-04-16 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/automation-tasks-rs/encrypt_secret)***
+***version: 1.0.4 date: 2024-04-16 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/automation-tasks-rs/encrypt_secret)***
 
  ![rust](https://img.shields.io/badge/rust-orange)
  ![work-in-progress](https://img.shields.io/badge/work_in_progress-yellow)
@@ -20,11 +20,11 @@
  ![Hits](https://bestia.dev/webpage_hit_counter/get_svg_image/1785154337.svg)
 
 [//]: # (auto_lines_of_code start)
-[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-155-green.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-[![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-214-blue.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-34-purple.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-[![Lines in examples](https://img.shields.io/badge/Lines_in_examples-22-yellow.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-[![Lines in tests](https://img.shields.io/badge/Lines_in_tests-148-orange.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-151-green.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+[![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-183-blue.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-17-purple.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+[![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+[![Lines in tests](https://img.shields.io/badge/Lines_in_tests-1-orange.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
 
 [//]: # (auto_lines_of_code end)
 

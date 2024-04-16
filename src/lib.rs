@@ -2,7 +2,7 @@
 //! # encrypt_secret
 //!
 //! **Library to encrypt/decrypt secrets**  
-//! ***version: 1.0.3 date: 2024-04-16 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/automation-tasks-rs/encrypt_secret)***
+//! ***version: 1.0.4 date: 2024-04-16 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/automation-tasks-rs/encrypt_secret)***
 //!
 //!  ![rust](https://img.shields.io/badge/rust-orange)
 //!  ![work-in-progress](https://img.shields.io/badge/work_in_progress-yellow)
@@ -14,11 +14,11 @@
 //!  [![Rust](https://github.com/bestia-dev/encrypt_secret/workflows/RustAction/badge.svg)](https://github.com/bestia-dev/encrypt_secret/)
 //!  ![Hits](https://bestia.dev/webpage_hit_counter/get_svg_image/1785154337.svg)
 //!
-//! [![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-155-green.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-//! [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-214-blue.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-//! [![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-34-purple.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-//! [![Lines in examples](https://img.shields.io/badge/Lines_in_examples-22-yellow.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
-//! [![Lines in tests](https://img.shields.io/badge/Lines_in_tests-148-orange.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-151-green.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-183-blue.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-17-purple.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
+//! [![Lines in tests](https://img.shields.io/badge/Lines_in_tests-1-orange.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)
 //!
 //! Hashtags: #rustlang
 //! My projects on GitHub are more like a tutorial than a finished product: [bestia-dev tutorials](https://github.com/bestia-dev/tutorials_rust_wasm).
@@ -116,15 +116,17 @@
 // region: mod, extern and use statements
 mod ssh_mod;
 mod ssh_sign_crypt_mod;
-mod symmetric_crypt_mod;
 mod utils_mod;
 
-// reexport types and functions for callers of the library
-pub use symmetric_crypt_mod::EncryptedString;
+/// A simple wrapper new-type around String just to show intent that it is already encrypted
+pub struct EncryptedString(pub String);
 
+// reexport types and functions for callers of the library
+pub use ssh_sign_crypt_mod::SshContextTrait;
+
+pub use ssh_mod::crate_ssh_agent_client;
+pub use ssh_mod::get_fingerprint_from_file;
+pub use ssh_mod::ssh_add_list_contains_fingerprint;
 pub use ssh_sign_crypt_mod::decrypt_with_ssh_interactive_from_file;
 pub use ssh_sign_crypt_mod::encrypt_with_ssh_interactive_save_file;
-pub use symmetric_crypt_mod::decrypt_symmetric;
-pub use symmetric_crypt_mod::decrypt_symmetric_with_password;
-pub use symmetric_crypt_mod::encrypt_symmetric;
-pub use symmetric_crypt_mod::encrypt_symmetric_with_password;
+pub use utils_mod::file_path_home_expand;

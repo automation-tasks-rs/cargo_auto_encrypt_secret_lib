@@ -10,6 +10,7 @@ use std::str::FromStr;
 /// ANSI color
 pub const RED: &str = "\x1b[31m";
 /// ANSI color
+#[allow(dead_code)]
 pub const GREEN: &str = "\x1b[32m";
 /// ANSI color
 pub const YELLOW: &str = "\x1b[33m";
