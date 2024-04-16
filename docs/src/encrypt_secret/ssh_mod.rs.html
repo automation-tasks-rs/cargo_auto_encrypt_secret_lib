@@ -161,6 +161,7 @@
 <a href="#107" id="107">107</a>
 <a href="#108" id="108">108</a>
 <a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
 </pre>
         </div>
         <pre class="rust"><code><span class="comment">// ssh_mod.rs
@@ -170,7 +171,8 @@
 
 <span class="kw">use </span>secrecy::ExposeSecret;
 
-<span class="kw">use </span><span class="kw">crate</span>::utils_mod::BLUE;
+<span class="attr">#[allow(unused_imports)]
+</span><span class="kw">use </span><span class="kw">crate</span>::utils_mod::BLUE;
 <span class="kw">use </span><span class="kw">crate</span>::utils_mod::GREEN;
 <span class="kw">use </span><span class="kw">crate</span>::utils_mod::RESET;
 <span class="kw">use </span><span class="kw">crate</span>::utils_mod::YELLOW;
