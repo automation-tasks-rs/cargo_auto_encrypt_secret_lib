@@ -1,0 +1,28 @@
+{
+  "vec_file_metadata": [
+    {
+      "filename": "Cargo.toml",
+      "filehash": "e90a3c3ea5014db38d56a951d5f36ae306b996b4fe4767a199a30b941dc1116e"
+    },
+    {
+      "filename": "src/utils_mod.rs",
+      "filehash": "05083d35cc48be4bc8548e8b23c53ef4ddcfd856d7dd215fa2be17f0d05b6e6e"
+    },
+    {
+      "filename": "src/lib.rs",
+      "filehash": "1d878cafee88cea43155fefab160454ffe03e92959451fee88bfa17ed1c982e8"
+    },
+    {
+      "filename": "src/ssh_sign_crypt_mod.rs",
+      "filehash": "653577861c8d45d052e6fe23029dfd26d89def728b78bbdc94edbcf421d94c27"
+    },
+    {
+      "filename": "src/ssh_mod.rs",
+      "filehash": "89a0d976452bb4b233b52a63a68b34dc87a56b8318deed5e168773d8fc14415b"
+    },
+    {
+      "filename": "src/symmetric_crypt_mod.rs",
+      "filehash": "65fbfac908d6f7a2028607dd43d18275786d3b36ec8fa53b57a46f6213cd709b"
+    }
+  ]
+}

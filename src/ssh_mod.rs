@@ -5,6 +5,7 @@ pub type FingerprintString = String;
 
 use secrecy::ExposeSecret;
 
+#[allow(unused_imports)]
 use crate::utils_mod::BLUE;
 use crate::utils_mod::GREEN;
 use crate::utils_mod::RESET;
@@ -62,6 +63,8 @@ pub fn sign_with_ssh_agent_or_identity_file(identity_private_file_path: &camino:
     /// This is used for normal code execution.
     #[cfg(not(test))]
     fn get_passphrase() -> secrecy::SecretString {
+        eprintln!(" ");
+        eprintln!("   {BLUE}Enter the passphrase for the SSH private key:{RESET}");
         secrecy::SecretString::new(
             inquire::Password::new("")
                 .without_confirmation()
@@ -88,8 +91,6 @@ pub fn sign_with_ssh_agent_or_identity_file(identity_private_file_path: &camino:
             eprintln!("   {YELLOW}You can manually add the SSH identity to ssh-agent:{RESET}");
             eprintln!("   {YELLOW}WARNING: using ssh-agent is less secure, because there is no need for user interaction.{RESET}");
             eprintln!("{GREEN}ssh-add -t 1h {identity_private_file_path}{RESET}");
-            eprintln!(" ");
-            eprintln!("   {BLUE}Enter the passphrase for the ssh private key:{RESET}");
 
             // just for test purpose I will use env var to read this passphrase. Don't use it in production.
 

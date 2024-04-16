@@ -1,11 +1,33 @@
 [package]
 name = "automation_tasks_rs"
-version = "0.1.1"
+version = "1.0.0"
 authors = ["bestia.dev"]
 homepage = "https://bestia.dev"
-edition = "2018"
-description = "cargo auto - automation tasks written in Rust language"
+edition = "2021"
+description = "Automation tasks coded in Rust language for the workflow of Rust projects"
 publish = false
 
 [dependencies]
-cargo_auto_lib = "0.8.60"
+cargo_auto_lib = "2.1.2"
+cargo_auto_github_lib = "0.1.33"
+encrypt_secret = "1.0.1"
+
+pretty_dbg = "1.0.54"
+inquire = "0.7.0"
+serde_json = {version= "1.0.114", features=["std"]}
+
+# the version of reqwest must be the same as the version in the library cargo_auto_github_lib
+reqwest = { version = "0.12.3", features = ["blocking", "stream"] }
+
+tokio-util = {version = "0.7.10", features = ["codec"]}
+tokio = {version = "1.36.0", features = ["rt","rt-multi-thread","fs"]}
+camino = "1.1.6"
+aes-gcm = "0.10.3"
+ssh-key = { version = "0.6.4", features = [ "rsa", "encryption"] }
+ssh-agent-client-rs = "0.9.0"
+rsa = { version = "0.9.6", features = ["sha2","pem"] }
+secrecy = { version="0.8.0", features=["alloc"]}
+once_cell = "1.18.0"
+lazy_static = "1.4.0"
+
+                       

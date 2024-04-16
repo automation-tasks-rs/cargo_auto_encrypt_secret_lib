@@ -14,6 +14,7 @@ pub const GREEN: &str = "\x1b[32m";
 /// ANSI color
 pub const YELLOW: &str = "\x1b[33m";
 /// ANSI color
+#[allow(dead_code)]
 pub const BLUE: &str = "\x1b[34m";
 /// ANSI color
 pub const RESET: &str = "\x1b[0m";
