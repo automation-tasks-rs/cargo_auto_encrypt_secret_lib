@@ -1,5 +1,9 @@
 target/
 
+# not needed in commits, but also not a problem if they are committed
+/.automation_tasks_rs_file_hashes.json
+/.auto_version_from_date.json
+
 # test artifacts don't need to be commited
 tests/test_github_api_token_ssh_1
 tests/test_github_api_token_ssh_1.pub

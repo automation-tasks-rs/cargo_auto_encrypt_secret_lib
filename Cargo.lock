@@ -365,7 +365,7 @@ dependencies = [
 
 [[package]]
 name = "encrypt_secret"
-version = "1.0.2"
+version = "1.0.3"
 dependencies = [
  "aes-gcm",
  "argon2",
