@@ -8,3 +8,6 @@ target/
 tests/test_github_api_token_ssh_1
 tests/test_github_api_token_ssh_1.pub
 tests/test_github_api_token_encrypted.txt
+
+# logs
+logs/
