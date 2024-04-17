@@ -20,7 +20,6 @@ include = [
 ]
 
 [dependencies]
-secrecy = { version="0.8.0", features=["alloc"]}
 argon2 = "0.5.3"
 ssh-key = { version = "0.6.6", features = [ "rsa", "encryption"] }
 ssh-agent-client-rs = "0.9.1"
