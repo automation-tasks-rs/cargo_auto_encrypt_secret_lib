@@ -146,6 +146,24 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c59e92b5a388f549b863a7bea62612c09f24c8393560709a54558a9abdfb3b9c"
 
 [[package]]
+name = "cargo_auto_encrypt_secret_lib"
+version = "1.0.5"
+dependencies = [
+ "aes-gcm",
+ "argon2",
+ "base64ct",
+ "camino",
+ "home",
+ "inquire",
+ "rsa",
+ "serde_json",
+ "ssh-agent-client-rs",
+ "ssh-key",
+ "tracing",
+ "zeroize",
+]
+
+[[package]]
 name = "cbc"
 version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -360,24 +378,6 @@ dependencies = [
  "rand_core",
  "sec1",
  "subtle",
- "zeroize",
-]
-
-[[package]]
-name = "encrypt_secret"
-version = "1.0.4"
-dependencies = [
- "aes-gcm",
- "argon2",
- "base64ct",
- "camino",
- "home",
- "inquire",
- "rsa",
- "serde_json",
- "ssh-agent-client-rs",
- "ssh-key",
- "tracing",
  "zeroize",
 ]
 

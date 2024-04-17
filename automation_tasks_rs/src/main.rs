@@ -1,7 +1,11 @@
-// automation_tasks_rs for encrypt_secret
+// automation_tasks_rs for cargo_auto_encrypt_secret_lib
 
 // for projects that don't use github, delete all the mentions of GitHub
+mod decrypt_mod;
+mod encrypt_mod;
 mod github_mod;
+mod ssh_mod;
+mod secrecy_mod;
 
 // region: library with basic automation tasks
 use cargo_auto_github_lib as cgl;
@@ -17,21 +21,40 @@ use cl::RESET;
 use cl::YELLOW;
 fn main() {
     std::panic::set_hook(Box::new(|panic_info| panic_set_hook(panic_info)));
-
+    tracing_init();
     cl::exit_if_not_run_in_rust_project_root_directory();
 
     // get CLI arguments
     let mut args = std::env::args();
+    tracing::debug!("Start exec: {:?}", &args);
     // the zero argument is the name of the program
     let _arg_0 = args.next();
     match_arguments_and_call_tasks(args);
 }
 
-/// The report of the panic is ugly for the user
+/// init tracing to file logs/automation_tasks_rs.log
+/// this folder is in .gitignore and will not be committed
+pub fn tracing_init() {
+    let file_appender = tracing_appender::rolling::daily("logs", "automation_tasks_rs.log");
+
+    let offset = time::UtcOffset::current_local_offset().expect("should get local offset!");
+    let timer = tracing_subscriber::fmt::time::OffsetTime::new(offset, time::macros::format_description!("[hour]:[minute]:[second].[subsecond digits:6]"));
+
+    tracing_subscriber::fmt()
+        .with_file(true)
+        .with_max_level(tracing::Level::DEBUG)
+        .with_timer(timer)
+        .with_line_number(true)
+        .with_ansi(false)
+        .with_writer(file_appender)
+        .init();
+}
+
+/// The report of the panic is ugly for the end user
 ///
 /// I use panics extensively to stop the execution. I am lazy to implement a super complicated error handling.
 /// I just need to stop the execution on every little bit of error. This utility is for developers. They will understand me.
-/// For errors I print the location. For not-error exit the location is not important.
+/// For errors I print the location. For not-error exit the location is not important - the message must contain "Exiting...".
 fn panic_set_hook(panic_info: &std::panic::PanicInfo) {
     let mut string_message = "".to_string();
     if let Some(message) = panic_info.payload().downcast_ref::<String>() {
@@ -43,7 +66,7 @@ fn panic_set_hook(panic_info: &std::panic::PanicInfo) {
 
     eprintln!("{string_message}");
 
-    if !string_message.contains("Exiting:") {
+    if !string_message.contains("Exiting...") {
         let file = panic_info.location().unwrap().file();
         let line = panic_info.location().unwrap().line();
         let column = panic_info.location().unwrap().column();
@@ -125,13 +148,14 @@ fn print_help() {
 
 /// all example commands in one place
 fn print_examples_cmd() {
+/*
     println!(
         r#"
     {YELLOW}run examples:{RESET}
-{GREEN}cargo run --example encrypt_to_file{RESET}
-{GREEN}cargo run --example decrypt_from_file{RESET}
+{GREEN}cargo run --example plantuml1{RESET}
 "#
     );
+*/
 }
 
 /// sub-command for bash auto-completion of `cargo auto` using the crate `dev_bestia_cargo_completion`
@@ -161,8 +185,8 @@ fn completion() {
 fn task_build() {
     //    let cargo_toml = cl::CargoToml::read();
     cl::auto_version_increment_semver_or_date();
-    cl::run_shell_command("cargo fmt");
-    cl::run_shell_command("cargo build");
+    cl::run_shell_command_static("cargo fmt").unwrap_or_else(|e| panic!("{e}"));
+    cl::run_shell_command_static("cargo build").unwrap_or_else(|e| panic!("{e}"));
     println!(
         r#"
     {YELLOW}After `cargo auto build`, examples and/or tests{RESET}
@@ -181,8 +205,8 @@ fn task_release() {
     cl::auto_cargo_toml_to_md();
     cl::auto_lines_of_code("");
 
-    cl::run_shell_command("cargo fmt");
-    cl::run_shell_command("cargo build --release");
+    cl::run_shell_command_static("cargo fmt").unwrap_or_else(|e| panic!("{e}"));
+    cl::run_shell_command_static("cargo build --release").unwrap_or_else(|e| panic!("{e}"));
     println!(
         r#"
     {YELLOW}After `cargo auto release`, run examples and/or tests{RESET}
@@ -205,17 +229,23 @@ fn task_doc() {
     // cl::auto_playground_run_code();
     cl::auto_md_to_doc_comments();
 
-    cl::run_shell_command("cargo doc --no-deps --document-private-items");
+    cl::run_shell_command_static("cargo doc --no-deps --document-private-items").unwrap_or_else(|e| panic!("{e}"));
     // copy target/doc into docs/ because it is github standard
-    cl::run_shell_command("rsync -a --info=progress2 --delete-after target/doc/ docs/");
+    cl::run_shell_command_static("rsync -a --info=progress2 --delete-after target/doc/ docs/").unwrap_or_else(|e| panic!("{e}"));
+
     // Create simple index.html file in docs directory
+    // Sanitize for bash fragment inside double quotes. It must not have a double quote because it would end the block.
+    let url_sanitized_for_double_quote = cargo_toml.package_name().replace("-", "_");
+    if url_sanitized_for_double_quote.contains("\"") {
+        panic!("{RED}The package_name must not contain a double quote because it could create a command injection in shell command.{RESET}")
+    }
     cl::run_shell_command(&format!(
-        r#"printf "<meta http-equiv=\"refresh\" content=\"0; url={}/index.html\" />\n" > docs/index.html"#,
-        cargo_toml.package_name().replace("-", "_")
+        r#"printf "<meta http-equiv=\"refresh\" content=\"0; url={url_sanitized_for_double_quote}/index.html\" />\n" > docs/index.html"#,
     ));
+
     // pretty html
     cl::auto_doc_tidy_html().unwrap();
-    cl::run_shell_command("cargo fmt");
+    cl::run_shell_command_static("cargo fmt").unwrap_or_else(|e| panic!("{e}"));
     // message to help user with next move
     println!(
         r#"
@@ -231,7 +261,7 @@ fn task_doc() {
 
 /// cargo test
 fn task_test() {
-    cl::run_shell_command("cargo test");
+    cl::run_shell_command_static("cargo test").unwrap_or_else(|e| panic!("{e}"));
     println!(
         r#"
     {YELLOW}After `cargo auto test`. If ok then {RESET}
@@ -256,23 +286,28 @@ fn task_commit_and_push(arg_2: Option<String>) {
 
     // If needed, ask to create a GitHub remote repository
     if !cl::git_has_remote() {
-        let github_client = crate::github_mod::GitHubClient::new();
+        let github_client = crate::github_mod::GitHubClient::new_interactive_input_token();
         cgl::new_remote_github_repository(&github_client).unwrap();
         cgl::description_and_topics_to_github(&github_client);
     } else {
-        let github_client = crate::github_mod::GitHubClient::new();
+        let github_client = crate::github_mod::GitHubClient::new_interactive_input_token();
         // if description or topics/keywords/tags have changed
         cgl::description_and_topics_to_github(&github_client);
 
         // separate commit for docs if they changed, to not make a lot of noise in the real commit
         if std::path::Path::new("docs").exists() {
-            cl::run_shell_command(r#"git add docs && git diff --staged --quiet || git commit -m "update docs" "#);
+            cl::run_shell_command_static(r#"git add docs && git diff --staged --quiet || git commit -m "update docs" "#).unwrap_or_else(|e| panic!("{e}"));
         }
 
         cl::add_message_to_unreleased(&message);
         // the real commit of code
-        cl::run_shell_command(&format!(r#"git add -A && git diff --staged --quiet || git commit -m "{message}" "#));
-        cl::run_shell_command("git push");
+        // Sanitize for bash fragment inside double quotes. It must not have a double quote because it would end the block.
+        let message_sanitized_for_double_quote = message.clone();
+        if message_sanitized_for_double_quote.contains("\"") {
+            panic!("{RED}The message must not contain a double quote because it could create a command injection in shell command.{RESET}")
+        }
+        cl::run_shell_command(&format!(r#"git add -A && git diff --staged --quiet || git commit -m "{message_sanitized_for_double_quote}" "#));
+        cl::run_shell_command_static("git push").unwrap_or_else(|e| panic!("{e}"));
     }
 
     println!(
@@ -326,9 +361,25 @@ fn task_github_new_release() {
     // and create a new Version title in RELEASES.md.
     let body_md_text = cl::body_text_from_releases_md(&release_name).unwrap();
 
-    let github_client = crate::github_mod::GitHubClient::new();
+    let github_client = crate::github_mod::GitHubClient::new_with_stored_token();
     let json_value = github_client.send_to_github_api(cgl::github_api_create_new_release(&owner, &repo_name, &tag_name_version, &release_name, branch, &body_md_text));
-    let release_id = json_value.get("id").unwrap().as_i64().unwrap().to_string();
+    // TODO: possible error:  
+/*  
+{
+  "documentation_url": "https://docs.github.com/rest/releases/releases#create-a-release",
+  "errors": [
+    {
+      "code": "already_exists",
+      "field": "tag_name",
+      "resource": "Release"
+    }
+  ],
+  "message": "Validation Failed"
+}
+ */
+    //pretty_dbg::pretty_dbg!(&json_value);
+
+    let _release_id = json_value.get("id").unwrap().as_i64().unwrap().to_string();
 
     println!(
         "
@@ -338,26 +389,37 @@ fn task_github_new_release() {
 
     // region: upload asset only for executables, not for libraries
     /*
-    println!("
+    println!(
+        "
         {YELLOW}Now uploading release asset. This can take some time if the files are big. Wait...{RESET}
-    ");
+    "
+    );
     // compress files tar.gz
     let tar_name = format!("{repo_name}-{tag_name_version}-x86_64-unknown-linux-gnu.tar.gz");
-    cl::run_shell_command(&format!("tar -zcvf {tar_name} target/release/{repo_name}"));
+
+    // Sanitize for bash fragment inside double quotes. It must not have a double quote because it would end the block.
+    let tar_name_sanitized_for_double_quote = tar_name.clone();
+    if tar_name_sanitized_for_double_quote.contains("\"") {
+        panic!("{RED}The tar_name must not contain a double quote because it could create a command injection in shell command.{RESET}")
+    }
+    let repo_name_sanitized_for_double_quote = repo_name.clone();
+    if repo_name_sanitized_for_double_quote.contains("\"") {
+        panic!("{RED}The repo_name must not contain a double quote because it could create a command injection in shell command.{RESET}")
+    }
+    cl::run_shell_command(&format!(
+        r#"tar -zcvf "{tar_name_sanitized_for_double_quote}" "target/release/{repo_name_sanitized_for_double_quote}" "#
+    ));
 
     // upload asset
-    cgl::github_api_upload_asset_to_release(
-        &github_client,
-        &owner,
-        &repo_name,
-        &release_id,
-        &tar_name,
-    );
-    cl::run_shell_command(&format!("rm {tar_name}"));
+    cgl::github_api_upload_asset_to_release(&github_client, &owner, &repo_name, &release_id, &tar_name);
 
-    println!("
+    cl::run_shell_command(&format!("rm {tar_name_sanitized_for_double_quote}"));
+
+    println!(
+        "
         {YELLOW}Asset uploaded. Open and edit the description on GitHub Releases in the browser.{RESET}
-    ");
+    "
+    );
     */
     // endregion: upload asset only for executables, not for libraries
 
@@ -368,3 +430,4 @@ fn task_github_new_release() {
     );
 }
 // endregion: tasks
+

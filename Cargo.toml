@@ -1,11 +1,11 @@
 [package]
-name = "encrypt_secret"
-version = "1.0.4"
+name = "cargo_auto_encrypt_secret_lib"
+version = "1.0.5"
 authors = ["bestia.dev"]
 homepage = "https://bestia.dev"
 edition = "2021"
 description = "Library to encrypt/decrypt secrets"
-repository = "https://github.com/automation-tasks-rs/encrypt_secret"
+repository = "https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib"
 readme = "README.md"
 license = "MIT"
 keywords = ["rust","work-in-progress"]

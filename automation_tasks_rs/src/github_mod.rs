@@ -25,14 +25,25 @@ pub struct GitHubClient {
     session_passcode: secrecy::SecretVec<u8>,
 
     /// private field is set only once in the new() constructor
-    encrypted_token: encrypt_secret::EncryptedString,
+    encrypted_token: crate::secrecy_mod::SecretEncryptedString,
 }
 
 impl GitHubClient {
     /// Create new Github client
     ///
     /// Interactively ask the user to input the GitHub token.
-    pub fn new() -> Self {
+    pub fn new_interactive_input_token() -> Self {
+        let mut github_client = Self::new_wo_token();
+
+        println!("{BLUE}Enter the GitHub API token:{RESET}");
+        github_client.encrypted_token = crate::secrecy_mod::SecretEncryptedString::new_with_string(inquire::Password::new("").without_confirmation().prompt().unwrap(),&github_client.session_passcode);
+
+        // return
+        github_client
+    }
+
+    /// Create new Github client
+    fn new_wo_token() -> Self {
         /// Internal function Generate a random password
         fn random_byte_passcode() -> [u8; 32] {
             let mut password = [0_u8; 32];
@@ -42,15 +53,11 @@ impl GitHubClient {
         }
 
         let session_passcode = secrecy::SecretVec::new(random_byte_passcode().to_vec());
-
-        println!("{BLUE}Enter the GitHub API token:{RESET}");
-        let token_is_a_secret = secrecy::SecretString::from(inquire::Password::new("").without_confirmation().prompt().unwrap());
-
-        let token_is_a_secret = encrypt_secret::encrypt_symmetric(&token_is_a_secret, &session_passcode).unwrap();
+        let encrypted_token= crate::secrecy_mod::SecretEncryptedString::new_with_string("".to_string(),&session_passcode);
 
         GitHubClient {
             session_passcode,
-            encrypted_token: token_is_a_secret,
+            encrypted_token,
         }
     }
 
@@ -62,29 +69,42 @@ impl GitHubClient {
     /// But this great user experience comes with security concerns. The token is accessible if the attacker is very dedicated.
     pub fn new_with_stored_token() -> Self {
         let encrypted_string_file_path = camino::Utf8Path::new("~/.ssh/github_api_token_encrypted.txt");
+        let encrypted_string_file_path_expanded = cargo_auto_encrypt_secret_lib::file_path_home_expand(encrypted_string_file_path);
+
         let identity_file_path = camino::Utf8Path::new("~/.ssh/github_api_token_ssh_1");
-        if !encrypted_string_file_path.exists() {
+        if !encrypted_string_file_path_expanded.exists() {
             // ask interactive
             println!("    {BLUE}Do you want to store the github api token encrypted with an SSH key? (y/n){RESET}");
             let answer = inquire::Text::new("").prompt().unwrap();
             if answer.to_lowercase() != "y" {
                 // enter the token manually, not storing
-                return Self::new();
+                return Self::new_interactive_input_token();
             } else {
-                // store the token
-                let client = Self::new();
-                // TODO: encrypt and save the token
-                return client;
+                // get the token
+                let github_client = Self::new_wo_token();
+                // encrypt and save the encrypted token
+                let mut ssh_context = crate::ssh_mod::SshContext::new();
+                cargo_auto_encrypt_secret_lib::encrypt_with_ssh_interactive_save_file(&mut ssh_context, identity_file_path, encrypted_string_file_path);
+
+                return github_client;
             }
         } else {
-            // TODO: file exists, read the token
-            Self::new()
+            // file exists, read the token and decrypt
+            let mut github_client = Self::new_wo_token();
+
+            let mut ssh_context = crate::ssh_mod::SshContext::new();
+            cargo_auto_encrypt_secret_lib::decrypt_with_ssh_interactive_from_file(&mut ssh_context, encrypted_string_file_path);
+
+            let token_is_a_secret = ssh_context.get_decrypted_string();
+            github_client.encrypted_token = crate::secrecy_mod::SecretEncryptedString::new_with_secret_string(token_is_a_secret,&github_client.session_passcode);
+
+            return github_client;
         }
     }
 
     /// decrypts the secret token in memory
     pub fn decrypt_token_in_memory(&self) -> secrecy::SecretString {
-        encrypt_secret::decrypt_symmetric(&self.encrypted_token, &self.session_passcode).unwrap()
+        self.encrypted_token.expose_decrypted_secret(&self.session_passcode)
     }
 }
 
