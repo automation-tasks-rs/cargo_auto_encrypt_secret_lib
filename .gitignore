@@ -1,4 +1,5 @@
 target/
+logs/
 
 # not needed in commits, but also not a problem if they are committed
 /.automation_tasks_rs_file_hashes.json
@@ -8,6 +9,3 @@ target/
 tests/test_github_api_token_ssh_1
 tests/test_github_api_token_ssh_1.pub
 tests/test_github_api_token_encrypted.txt
-
-# logs
-logs/

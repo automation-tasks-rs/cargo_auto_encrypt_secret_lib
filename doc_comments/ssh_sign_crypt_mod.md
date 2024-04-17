@@ -44,4 +44,6 @@ Decryption
 6. Get the token.  
 7. Zeroize the token and password.
 
+Reference: <https://www.agwa.name/blog/post/ssh_signatures>
+
 [//]: # (auto_md_to_doc_comments segment end A)
