@@ -20,6 +20,7 @@
     "cSpell.words": [
         "Alla",
         "alloc",
+        "appender",
         "bestia",
         "bestiadev",
         "brainer",
@@ -27,6 +28,7 @@
         "camino",
         "ciphertext",
         "commitish",
+        "CRUSTDE",
         "developmenttool",
         "endregion",
         "filedate",
@@ -44,9 +46,11 @@
         "rustprojects",
         "serde",
         "sshadd",
+        "subsecond",
         "substack",
         "termion",
         "UNHIDE",
+        "zcvf",
         "zdravje",
         "zeroize"
     ]

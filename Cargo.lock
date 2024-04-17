@@ -147,7 +147,7 @@ checksum = "c59e92b5a388f549b863a7bea62612c09f24c8393560709a54558a9abdfb3b9c"
 
 [[package]]
 name = "cargo_auto_encrypt_secret_lib"
-version = "1.0.6"
+version = "1.0.7"
 dependencies = [
  "aes-gcm",
  "argon2",

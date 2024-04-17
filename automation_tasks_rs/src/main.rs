@@ -1,24 +1,27 @@
 // automation_tasks_rs for cargo_auto_encrypt_secret_lib
 
-// for projects that don't use github, delete all the mentions of GitHub
-mod decrypt_mod;
-mod encrypt_mod;
-mod github_mod;
-mod ssh_mod;
-mod secrecy_mod;
+// region: library and modules with basic automation tasks
 
-// region: library with basic automation tasks
+// for projects that don't use github, delete all the mentions of GitHub
+mod secrets_always_local_mod;
+use crate::secrets_always_local_mod::crate_io_mod;
+use crate::secrets_always_local_mod::github_mod;
+
 use cargo_auto_github_lib as cgl;
 use cargo_auto_lib as cl;
-
-use cgl::SendToGitHubApi;
-// traits must be in scope (Rust strangeness)
-use cl::CargoTomlPublicApiMethods;
 
 use cl::GREEN;
 use cl::RED;
 use cl::RESET;
 use cl::YELLOW;
+
+// traits must be in scope (Rust strangeness)
+use cgl::SendToGitHubApi;
+use cl::CargoTomlPublicApiMethods;
+use cl::ShellCommandLimitedDoubleQuotesSanitizerTrait;
+
+// region: library with basic automation tasks
+
 fn main() {
     std::panic::set_hook(Box::new(|panic_info| panic_set_hook(panic_info)));
     tracing_init();
@@ -26,19 +29,33 @@ fn main() {
 
     // get CLI arguments
     let mut args = std::env::args();
-    tracing::debug!("Start exec: {:?}", &args);
     // the zero argument is the name of the program
     let _arg_0 = args.next();
     match_arguments_and_call_tasks(args);
 }
 
-/// init tracing to file logs/automation_tasks_rs.log
-/// this folder is in .gitignore and will not be committed
+// region: general functions
+
+/// Initialize tracing to file logs/automation_tasks_rs.log
+///
+/// The folder logs/ is in .gitignore and will not be committed.
 pub fn tracing_init() {
     let file_appender = tracing_appender::rolling::daily("logs", "automation_tasks_rs.log");
 
     let offset = time::UtcOffset::current_local_offset().expect("should get local offset!");
     let timer = tracing_subscriber::fmt::time::OffsetTime::new(offset, time::macros::format_description!("[hour]:[minute]:[second].[subsecond digits:6]"));
+
+    // Filter out logs from: hyper_util, reqwest
+    // A filter consists of one or more comma-separated directives
+    // target[span{field=value}]=level
+    // examples: tokio::net=info
+    // directives can be added with the RUST_LOG environment variable:
+    // export RUST_LOG=automation_tasks_rs=trace
+    // Unset the environment variable RUST_LOG
+    // unset RUST_LOG
+    let filter = tracing_subscriber::EnvFilter::from_default_env()
+        .add_directive("hyper_util=error".parse().unwrap())
+        .add_directive("reqwest=error".parse().unwrap());
 
     tracing_subscriber::fmt()
         .with_file(true)
@@ -47,14 +64,15 @@ pub fn tracing_init() {
         .with_line_number(true)
         .with_ansi(false)
         .with_writer(file_appender)
+        .with_env_filter(filter)
         .init();
 }
 
-/// The report of the panic is ugly for the end user
+/// The original Rust report of the panic is ugly for the end user
 ///
 /// I use panics extensively to stop the execution. I am lazy to implement a super complicated error handling.
 /// I just need to stop the execution on every little bit of error. This utility is for developers. They will understand me.
-/// For errors I print the location. For not-error exit the location is not important - the message must contain "Exiting...".
+/// For errors I print the location. If the message contains "Exiting..." than it is a "not-error exit" and  the location is not important.
 fn panic_set_hook(panic_info: &std::panic::PanicInfo) {
     let mut string_message = "".to_string();
     if let Some(message) = panic_info.payload().downcast_ref::<String>() {
@@ -64,15 +82,19 @@ fn panic_set_hook(panic_info: &std::panic::PanicInfo) {
         string_message.push_str(message);
     }
 
+    tracing::debug!("{string_message}");
     eprintln!("{string_message}");
 
     if !string_message.contains("Exiting...") {
         let file = panic_info.location().unwrap().file();
         let line = panic_info.location().unwrap().line();
         let column = panic_info.location().unwrap().column();
+        tracing::debug!("Location: {file}:{line}:{column}");
         eprintln!("Location: {file}:{line}:{column}");
     }
 }
+
+// endregion: general functions
 
 // region: match, help and completion
 
@@ -129,16 +151,18 @@ fn print_help() {
     {YELLOW}On the very first commit, this task will initialize a new local git repository and create a remote GitHub repo.{RESET}
     {YELLOW}For the Github API the task needs the Personal Access Token Classic from <https://github.com/settings/tokens>{RESET}
     {YELLOW}You can choose to type the token every time or to store it in a file encrypted with an SSH key.{RESET}
-    {YELLOW}Then you can write the passphrase of the private key every time ot store the private key in ssh-agent for the current session.{RESET}
+    {YELLOW}Then you can type the passphrase of the private key every time. This is pretty secure.{RESET}
+    {YELLOW}Somewhat less secure (but more comfortable) way is to store the private key in ssh-agent.{RESET}
 {GREEN}cargo auto publish_to_crates_io{RESET} - {YELLOW}publish to crates.io, git tag{RESET}
     {YELLOW}You need the API token for publishing. Get the token on <https://crates.io/settings/tokens>.{RESET}
     {YELLOW}You can choose to type the token every time or to store it in a file encrypted with an SSH key.{RESET}
-    {YELLOW}Then you can write the passphrase of the private key every time ot store the private key in ssh-agent for the current session.{RESET}
-
+    {YELLOW}Then you can type the passphrase of the private key every time. This is pretty secure.{RESET}
+    {YELLOW}Somewhat less secure (but more comfortable) way is to store the private key in ssh-agent.{RESET}
 {GREEN}cargo auto github_new_release{RESET} - {YELLOW}creates new release on github{RESET}
     {YELLOW}For the Github API the task needs the Personal Access Token Classic from <https://github.com/settings/tokens>{RESET}
     {YELLOW}You can choose to type the token every time or to store it in a file encrypted with an SSH key.{RESET}
-    {YELLOW}Then you can write the passphrase of the private key every time ot store the private key in ssh-agent for the current session.{RESET}
+    {YELLOW}Then you can type the passphrase of the private key every time. This is pretty secure.{RESET}
+    {YELLOW}Somewhat less secure (but more comfortable) way is to store the private key in ssh-agent.{RESET}
 
     {YELLOW}© 2024 bestia.dev  MIT License github.com/automation-tasks-rs/cargo-auto{RESET}
 "#
@@ -234,14 +258,10 @@ fn task_doc() {
     cl::run_shell_command_static("rsync -a --info=progress2 --delete-after target/doc/ docs/").unwrap_or_else(|e| panic!("{e}"));
 
     // Create simple index.html file in docs directory
-    // Sanitize for bash fragment inside double quotes. It must not have a double quote because it would end the block.
-    let url_sanitized_for_double_quote = cargo_toml.package_name().replace("-", "_");
-    if url_sanitized_for_double_quote.contains("\"") {
-        panic!("{RED}The package_name must not contain a double quote because it could create a command injection in shell command.{RESET}")
-    }
-    cl::run_shell_command(&format!(
-        r#"printf "<meta http-equiv=\"refresh\" content=\"0; url={url_sanitized_for_double_quote}/index.html\" />\n" > docs/index.html"#,
-    ));
+    let mut shell_command_sanitized =
+        cl::ShellCommandLimitedDoubleQuotesSanitizer::new(r#"printf "<meta http-equiv=\"refresh\" content=\"0; url={url_sanitized_for_double_quote}/index.html\" />\n" > docs/index.html"#);
+    shell_command_sanitized.replace_placeholder_forbidden_double_quotes("{url_sanitized_for_double_quote}", &cargo_toml.package_name().replace("-", "_"));
+    shell_command_sanitized.run();
 
     // pretty html
     cl::auto_doc_tidy_html().unwrap();
@@ -286,11 +306,11 @@ fn task_commit_and_push(arg_2: Option<String>) {
 
     // If needed, ask to create a GitHub remote repository
     if !cl::git_has_remote() {
-        let github_client = crate::github_mod::GitHubClient::new_interactive_input_token();
+        let github_client = github_mod::GitHubClient::new_with_stored_token();
         cgl::new_remote_github_repository(&github_client).unwrap();
         cgl::description_and_topics_to_github(&github_client);
     } else {
-        let github_client = crate::github_mod::GitHubClient::new_interactive_input_token();
+        let github_client = github_mod::GitHubClient::new_with_stored_token();
         // if description or topics/keywords/tags have changed
         cgl::description_and_topics_to_github(&github_client);
 
@@ -301,18 +321,16 @@ fn task_commit_and_push(arg_2: Option<String>) {
 
         cl::add_message_to_unreleased(&message);
         // the real commit of code
-        // Sanitize for bash fragment inside double quotes. It must not have a double quote because it would end the block.
-        let message_sanitized_for_double_quote = message.clone();
-        if message_sanitized_for_double_quote.contains("\"") {
-            panic!("{RED}The message must not contain a double quote because it could create a command injection in shell command.{RESET}")
-        }
-        cl::run_shell_command(&format!(r#"git add -A && git diff --staged --quiet || git commit -m "{message_sanitized_for_double_quote}" "#));
+        let mut shell_command_sanitized = cl::ShellCommandLimitedDoubleQuotesSanitizer::new(r#"git add -A && git diff --staged --quiet || git commit -m "{message_sanitized_for_double_quote}" "#);
+        shell_command_sanitized.replace_placeholder_forbidden_double_quotes("{message_sanitized_for_double_quote}", &message);
+        shell_command_sanitized.run();
+
         cl::run_shell_command_static("git push").unwrap_or_else(|e| panic!("{e}"));
     }
 
     println!(
         r#"
-{YELLOW}After `cargo auto commit_and_push "message"`{RESET}
+    {YELLOW}After `cargo auto commit_and_push "message"`{RESET}
 {GREEN}cargo auto publish_to_crates_io{RESET}
 "#
     );
@@ -327,7 +345,8 @@ fn task_publish_to_crates_io() {
     let tag_name_version = cl::git_tag_sync_check_create_push(&version);
 
     // cargo publish with encrypted secret token
-    cl::publish_to_crates_io_with_secret_token();
+    let crate_io_client = crate_io_mod::CratesIoClient::new_with_stored_token();
+    crate_io_client.publish_to_crates_io();
 
     println!(
         r#"
@@ -358,28 +377,26 @@ fn task_github_new_release() {
 
     // First, the user must write the content into file RELEASES.md in the section ## Unreleased.
     // Then the automation task will copy the content to GitHub release
-    // and create a new Version title in RELEASES.md.
-    let body_md_text = cl::body_text_from_releases_md(&release_name).unwrap();
+    let body_md_text = cl::body_text_from_releases_md().unwrap();
 
-    let github_client = crate::github_mod::GitHubClient::new_with_stored_token();
+    let github_client = github_mod::GitHubClient::new_with_stored_token();
     let json_value = github_client.send_to_github_api(cgl::github_api_create_new_release(&owner, &repo_name, &tag_name_version, &release_name, branch, &body_md_text));
-    // TODO: possible error:  
-/*  
-{
-  "documentation_url": "https://docs.github.com/rest/releases/releases#create-a-release",
-  "errors": [
-    {
-      "code": "already_exists",
-      "field": "tag_name",
-      "resource": "Release"
+    // early exit on error
+    if let Some(error_message) = json_value.get("message") {
+        eprintln!("{RED}{error_message}{RESET}");
+        if let Some(errors) = json_value.get("errors") {
+            let errors = errors.as_array().unwrap();
+            for error in errors.iter() {
+                if let Some(code) = error.get("code") {
+                    eprintln!("{RED}{code}{RESET}");
+                }
+            }
+        }
+        panic!("{RED}Call to GitHub API returned an error.{RESET}")
     }
-  ],
-  "message": "Validation Failed"
-}
- */
-    //pretty_dbg::pretty_dbg!(&json_value);
 
-    let _release_id = json_value.get("id").unwrap().as_i64().unwrap().to_string();
+    // Create a new Version title in RELEASES.md.
+    cl::create_new_version_in_releases_md(&release_name).unwrap();
 
     println!(
         "
@@ -388,7 +405,8 @@ fn task_github_new_release() {
     );
 
     // region: upload asset only for executables, not for libraries
-    /*
+/*
+    let release_id = json_value.get("id").unwrap().as_i64().unwrap().to_string();
     println!(
         "
         {YELLOW}Now uploading release asset. This can take some time if the files are big. Wait...{RESET}
@@ -397,37 +415,31 @@ fn task_github_new_release() {
     // compress files tar.gz
     let tar_name = format!("{repo_name}-{tag_name_version}-x86_64-unknown-linux-gnu.tar.gz");
 
-    // Sanitize for bash fragment inside double quotes. It must not have a double quote because it would end the block.
-    let tar_name_sanitized_for_double_quote = tar_name.clone();
-    if tar_name_sanitized_for_double_quote.contains("\"") {
-        panic!("{RED}The tar_name must not contain a double quote because it could create a command injection in shell command.{RESET}")
-    }
-    let repo_name_sanitized_for_double_quote = repo_name.clone();
-    if repo_name_sanitized_for_double_quote.contains("\"") {
-        panic!("{RED}The repo_name must not contain a double quote because it could create a command injection in shell command.{RESET}")
-    }
-    cl::run_shell_command(&format!(
-        r#"tar -zcvf "{tar_name_sanitized_for_double_quote}" "target/release/{repo_name_sanitized_for_double_quote}" "#
-    ));
+    let mut shell_command_sanitized =
+        cl::ShellCommandLimitedDoubleQuotesSanitizer::new(r#"tar -zcvf "{tar_name_sanitized_for_double_quote}" "target/release/{repo_name_sanitized_for_double_quote}" "#);
+    shell_command_sanitized.replace_placeholder_forbidden_double_quotes("{tar_name_sanitized_for_double_quote}", &tar_name);
+    shell_command_sanitized.replace_placeholder_forbidden_double_quotes("{repo_name_sanitized_for_double_quote}", &repo_name);
+    shell_command_sanitized.run();
 
     // upload asset
     cgl::github_api_upload_asset_to_release(&github_client, &owner, &repo_name, &release_id, &tar_name);
 
-    cl::run_shell_command(&format!("rm {tar_name_sanitized_for_double_quote}"));
+    let mut shell_command_sanitized = cl::ShellCommandLimitedDoubleQuotesSanitizer::new(r#"rm "{tar_name_sanitized_for_double_quote}" "#);
+    shell_command_sanitized.replace_placeholder_forbidden_double_quotes("{tar_name_sanitized_for_double_quote}", &tar_name);
+    shell_command_sanitized.run();
 
     println!(
-        "
-        {YELLOW}Asset uploaded. Open and edit the description on GitHub Releases in the browser.{RESET}
-    "
+        r#"
+    {YELLOW}Asset uploaded. Open and edit the description on GitHub Releases in the browser.{RESET}
+    "#
     );
     */
     // endregion: upload asset only for executables, not for libraries
 
     println!(
-        "
+        r#"
 {GREEN}https://github.com/{owner}/{repo_name}/releases{RESET}
-    "
+    "#
     );
 }
 // endregion: tasks
-

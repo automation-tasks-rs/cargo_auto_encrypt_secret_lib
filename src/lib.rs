@@ -2,7 +2,7 @@
 //! # cargo_auto_encrypt_secret_lib
 //!
 //! **Library to encrypt/decrypt secrets**  
-//! ***version: 1.0.5 date: 2024-04-17 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib)***
+//! ***version: 1.0.7 date: 2024-04-17 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib)***
 //!
 //!  ![rust](https://img.shields.io/badge/rust-orange)
 //!  ![work-in-progress](https://img.shields.io/badge/work_in_progress-yellow)

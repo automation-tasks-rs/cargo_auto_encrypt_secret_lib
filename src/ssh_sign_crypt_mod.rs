@@ -45,6 +45,8 @@
 //! 6. Get the token.  
 //! 7. Zeroize the token and password.
 //!
+//! Reference: <https://www.agwa.name/blog/post/ssh_signatures>
+//!
 // endregion: auto_md_to_doc_comments include doc_comments/ssh_sign_crypt_mod.md A //!
 
 #[allow(unused_imports)]

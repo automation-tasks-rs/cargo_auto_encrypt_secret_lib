@@ -279,9 +279,9 @@ dependencies = [
 
 [[package]]
 name = "cargo_auto_github_lib"
-version = "1.0.2"
+version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7ce1e545a6bafef2601f7f6ca36627f2bd7f7ca22a6cbd34f6510747c8c772d0"
+checksum = "fb70a4df6f543b4e224b16f49990b6e5112fb3595e4f7001fc2ca345712a3a40"
 dependencies = [
  "camino",
  "cargo_auto_lib",
@@ -296,9 +296,9 @@ dependencies = [
 
 [[package]]
 name = "cargo_auto_lib"
-version = "2.1.4"
+version = "2.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "eb8c86df4fbb5a386682a2b166900c653daa693969ed206144d2eb3b7ed439f1"
+checksum = "12fefa8b79e7bbcaef27ce373bd48489c4bd67c7d193b27ef3a61a6c5054a923"
 dependencies = [
  "anyhow",
  "base64ct",
