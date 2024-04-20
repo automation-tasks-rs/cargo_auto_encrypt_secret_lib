@@ -10,19 +10,18 @@ jobs:
     steps:
       - name: Cleanup
         run: |
-          gh extension install actions/gh-actions-cache
-
-          echo "Fetching list of cache key"
-          cacheKeysForPR=$(gh actions-cache list -R $REPO -B main -L 100 | cut -f 1 )
+          printf "Fetching list of cache key\n"
+          cacheKeysForPR=$(gh cache list)
 
           ## Setting this to not fail the workflow while deleting cache keys.
           set +e
-          echo "Deleting caches..."
+          printf "Deleting caches...\n"
           for cacheKey in $cacheKeysForPR
           do
-              gh actions-cache delete $cacheKey -R $REPO -B main --confirm
+              printf "$cacheKey\n"
+              gh cache delete $cacheKey
           done
-          echo "Done"
+          printf "Done\n"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
