@@ -1,11 +1,8 @@
 name: cleanup caches on default branch main
 
-# TODO: this workflow will be triggered only manually
-# For now I don't know hot to code it, so I used a rare event.
+# Configure Manual Trigger
 on:
-  pull_request:
-    types:
-      - closed
+  workflow_dispatch:
 
 jobs:
   cleanup:
