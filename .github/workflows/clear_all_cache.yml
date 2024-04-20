@@ -32,7 +32,7 @@ jobs:
             printf "\033[0;33m     Fetching list of cache key\n\033[0m\n"
             printf "\033[0;32m gh actions-cache list -R $REPO -B $BRANCH | cut -f 1 \n\033[0m\n"
             cache_keys=$(gh actions-cache list -R $REPO -B $BRANCH | cut -f 1 )
-            printf "$cache_keys\n"
+            # printf "$cache_keys\n"
             if [ -z "$cache_keys" ]; then 
               printf "\033[0;35m    gh actions-cache list returned nothing.\n\033[0m\n"
               has_items=false
@@ -41,7 +41,7 @@ jobs:
             set +e
             for cacheKey in $cache_keys
             do
-                printf "\033[0;332 gh actions-cache delete $cacheKey -R $REPO -B $BRANCH --confirm\n\033[0m\n"
+                # printf "\033[0;332 gh actions-cache delete $cacheKey -R $REPO -B $BRANCH --confirm\n\033[0m\n"
                 gh actions-cache delete $cacheKey -R $REPO -B $BRANCH --confirm
             done
           done          
