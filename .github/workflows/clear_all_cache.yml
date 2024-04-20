@@ -1,27 +1,40 @@
 name: cleanup caches on main
 
-# Configure Manual Trigger
+# Configure Manual Trigger with workflow_dispatch
 on:
   workflow_dispatch:
 
 jobs:
   cleanup:
     runs-on: ubuntu-latest
+    permissions:
+      # `actions:write` permission is required to delete caches
+      #   See also: https://docs.github.com/en/rest/actions/cache?apiVersion=2022-11-28#delete-a-github-actions-cache-for-a-repository-using-a-cache-id
+      actions: write
+      contents: read
     steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
       - name: Cleanup
         run: |
-          printf "Fetching list of cache key\n"
-          cacheKeysForPR=$(gh cache list)
+          gh extension install actions/gh-actions-cache
+          
+          REPO=${{ github.repository }}
+          BRANCH=refs/pull/${{ github.event.repository.default_branch }}/merge
 
-          ## Setting this to not fail the workflow while deleting cache keys.
+          printf "Fetching list of cache key\n"
+          cacheKeysForPR=$(gh actions-cache list -R $REPO -B $BRANCH | cut -f 1 )
+
+          ## Setting this to not fail the workflow while deleting cache keys. 
           set +e
           printf "Deleting caches...\n"
           for cacheKey in $cacheKeysForPR
           do
-              printf "$cacheKey\n"
-              gh cache delete $cacheKey
+              printf "gh actions-cache delete $cacheKey -R $REPO -B $BRANCH --confirm\n"
+              gh actions-cache delete $cacheKey -R $REPO -B $BRANCH --confirm
           done
           printf "Done\n"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.repository }}
+
