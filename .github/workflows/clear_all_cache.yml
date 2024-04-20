@@ -27,7 +27,7 @@ jobs:
 
           # loop until the list is empty, because it deletes only 30 per page
           has_items=true
-          while [ $has_items ]
+          while [ "$has_items" = true ]
           do
             printf "\033[0;33m     Fetching list of cache key\n\033[0m\n"
             printf "\033[0;32m gh actions-cache list -R $REPO -B $BRANCH | cut -f 1 \n\033[0m\n"
@@ -35,7 +35,7 @@ jobs:
             printf "$cache_keys\n"
             if [ -z "$cache_keys" ]; then 
               printf "\033[0;35m    gh actions-cache list returned nothing.\n\033[0m\n"
-              $has_items=false
+              has_items=false
             fi
             ## Setting this to not fail the workflow while deleting cache keys. 
             set +e
