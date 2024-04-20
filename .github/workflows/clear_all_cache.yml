@@ -26,14 +26,18 @@ jobs:
           printf "$BRANCH\n"
 
           # loop 20 times, because it deletes only 30 per page
-          counter=1
-          while [ $counter -le 20 ]
+          # TODO: until the list is empty
+          has_items=true
+          while [ $has_items ]
           do
             printf "Fetching list of cache key\n"
             printf "gh actions-cache list -R $REPO -B $BRANCH | cut -f 1 \n"
             cache_keys=$(gh actions-cache list -R $REPO -B $BRANCH | cut -f 1 )
             printf "$cache_keys\n"
-
+            if [ -z "$cache_keys" ]; then 
+              printf "\033[0;33m gh actions-cache list returned nothing.\n\033[0m\n"
+              has_items=false
+            fi
             ## Setting this to not fail the workflow while deleting cache keys. 
             set +e
             printf "Deleting caches...\n"
