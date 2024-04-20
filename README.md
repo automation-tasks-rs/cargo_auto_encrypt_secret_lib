@@ -15,8 +15,8 @@
  [![crates.io](https://img.shields.io/crates/v/cargo_auto_encrypt_secret_lib.svg)](https://crates.io/crates/cargo_auto_encrypt_secret_lib)
  [![Documentation](https://docs.rs/cargo_auto_encrypt_secret_lib/badge.svg)](https://docs.rs/cargo_auto_encrypt_secret_lib/)
  [![Lib.rs](https://img.shields.io/badge/Lib.rs-rust-orange.svg)](https://lib.rs/crates/cargo_auto_encrypt_secret_lib/)
- [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/cargo_auto_encrypt_secret_lib/blob/master/LICENSE)
- [![Rust](https://github.com/bestia-dev/cargo_auto_encrypt_secret_lib/workflows/RustAction/badge.svg)](https://github.com/bestia-dev/cargo_auto_encrypt_secret_lib/)
+ [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib/blob/master/LICENSE)
+ [![Rust](https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib/workflows/RustAction/badge.svg)](https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib/)
  ![Hits](https://bestia.dev/webpage_hit_counter/get_svg_image/1785154337.svg)
 
 [//]: # (auto_lines_of_code start)
