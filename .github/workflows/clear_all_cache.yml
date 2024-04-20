@@ -41,7 +41,7 @@ jobs:
             set +e
             for cacheKey in $cache_keys
             do
-                # printf "\033[0;332 gh actions-cache delete $cacheKey -R $REPO -B $BRANCH --confirm\n\033[0m\n"
+                # printf "\033[0;32m gh actions-cache delete $cacheKey -R $REPO -B $BRANCH --confirm\n\033[0m\n"
                 gh actions-cache delete $cacheKey -R $REPO -B $BRANCH --confirm
             done
           done          
