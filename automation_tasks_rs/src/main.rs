@@ -258,10 +258,9 @@ fn task_doc() {
     cl::run_shell_command_static("rsync -a --info=progress2 --delete-after target/doc/ docs/").unwrap_or_else(|e| panic!("{e}"));
 
     // Create simple index.html file in docs directory
-    let mut shell_command_sanitized =
-        cl::ShellCommandLimitedDoubleQuotesSanitizer::new(r#"printf "<meta http-equiv=\"refresh\" content=\"0; url={url_sanitized_for_double_quote}/index.html\" />\n" > docs/index.html"#);
-    shell_command_sanitized.replace_placeholder_forbidden_double_quotes("{url_sanitized_for_double_quote}", &cargo_toml.package_name().replace("-", "_"));
-    shell_command_sanitized.run();
+    cl::ShellCommandLimitedDoubleQuotesSanitizer::new(r#"printf "<meta http-equiv=\"refresh\" content=\"0; url={url_sanitized_for_double_quote}/index.html\" />\n" > docs/index.html"#).unwrap_or_else(|e| panic!("{e}"))
+    .arg("{url_sanitized_for_double_quote}", &cargo_toml.package_name().replace("-", "_")).unwrap_or_else(|e| panic!("{e}"))
+    .run().unwrap_or_else(|e| panic!("{e}"));
 
     // pretty html
     cl::auto_doc_tidy_html().unwrap();
@@ -321,9 +320,9 @@ fn task_commit_and_push(arg_2: Option<String>) {
 
         cl::add_message_to_unreleased(&message);
         // the real commit of code
-        let mut shell_command_sanitized = cl::ShellCommandLimitedDoubleQuotesSanitizer::new(r#"git add -A && git diff --staged --quiet || git commit -m "{message_sanitized_for_double_quote}" "#);
-        shell_command_sanitized.replace_placeholder_forbidden_double_quotes("{message_sanitized_for_double_quote}", &message);
-        shell_command_sanitized.run();
+        cl::ShellCommandLimitedDoubleQuotesSanitizer::new(r#"git add -A && git diff --staged --quiet || git commit -m "{message_sanitized_for_double_quote}" "#).unwrap_or_else(|e| panic!("{e}"))
+        .arg("{message_sanitized_for_double_quote}", &message).unwrap_or_else(|e| panic!("{e}"))
+        .run().unwrap_or_else(|e| panic!("{e}"));
 
         cl::run_shell_command_static("git push").unwrap_or_else(|e| panic!("{e}"));
     }

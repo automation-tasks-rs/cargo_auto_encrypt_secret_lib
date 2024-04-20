@@ -1,6 +1,6 @@
 [package]
 name = "cargo_auto_encrypt_secret_lib"
-version = "1.0.7"
+version = "1.0.8"
 authors = ["bestia.dev"]
 homepage = "https://bestia.dev"
 edition = "2021"
