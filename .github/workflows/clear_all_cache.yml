@@ -25,29 +25,27 @@ jobs:
           BRANCH=main
           printf "$BRANCH\n"
 
-          # loop 20 times, because it deletes only 30 per page
-          # TODO: until the list is empty
+          # loop until the list is empty, because it deletes only 30 per page
           has_items=true
           while [ $has_items ]
           do
-            printf "Fetching list of cache key\n"
-            printf "gh actions-cache list -R $REPO -B $BRANCH | cut -f 1 \n"
+            printf "\033[0;33m     Fetching list of cache key\n\033[0m\n"
+            printf "\033[0;32m gh actions-cache list -R $REPO -B $BRANCH | cut -f 1 \n\033[0m\n"
             cache_keys=$(gh actions-cache list -R $REPO -B $BRANCH | cut -f 1 )
             printf "$cache_keys\n"
             if [ -z "$cache_keys" ]; then 
-              printf "\033[0;33m gh actions-cache list returned nothing.\n\033[0m\n"
-              has_items=false
+              printf "\033[0;35m    gh actions-cache list returned nothing.\n\033[0m\n"
+              $has_items=false
             fi
             ## Setting this to not fail the workflow while deleting cache keys. 
             set +e
-            printf "Deleting caches...\n"
             for cacheKey in $cache_keys
             do
-                printf "gh actions-cache delete $cacheKey -R $REPO -B $BRANCH --confirm\n"
+                printf "\033[0;332 gh actions-cache delete $cacheKey -R $REPO -B $BRANCH --confirm\n\033[0m\n"
                 gh actions-cache delete $cacheKey -R $REPO -B $BRANCH --confirm
             done
           done          
-          printf "Done\n"
+          printf "\033[0;33m    Done\n\033[0m\n"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
