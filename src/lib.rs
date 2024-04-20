@@ -2,16 +2,17 @@
 //! # cargo_auto_encrypt_secret_lib
 //!
 //! **Library to encrypt/decrypt secrets**  
-//! ***version: 1.0.8 date: 2024-04-20 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib)***
+//! ***version: 1.0.9 date: 2024-04-20 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib)***
 //!
 //!  ![rust](https://img.shields.io/badge/rust-orange)
-//!  ![work-in-progress](https://img.shields.io/badge/work_in_progress-yellow)
+//!  ![maintained](https://img.shields.io/badge/maintained-green)
+//!  ![ready_for_use](https://img.shields.io/badge/ready_for_use-orange)
 //!
 //!  [![crates.io](https://img.shields.io/crates/v/cargo_auto_encrypt_secret_lib.svg)](https://crates.io/crates/cargo_auto_encrypt_secret_lib)
 //!  [![Documentation](https://docs.rs/cargo_auto_encrypt_secret_lib/badge.svg)](https://docs.rs/cargo_auto_encrypt_secret_lib/)
 //!  [![Lib.rs](https://img.shields.io/badge/Lib.rs-rust-orange.svg)](https://lib.rs/crates/cargo_auto_encrypt_secret_lib/)
-//!  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/cargo_auto_encrypt_secret_lib/blob/master/LICENSE)
-//!  [![Rust](https://github.com/bestia-dev/cargo_auto_encrypt_secret_lib/workflows/RustAction/badge.svg)](https://github.com/bestia-dev/cargo_auto_encrypt_secret_lib/)
+//!  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib/blob/master/LICENSE)
+//!  [![Rust](https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib/workflows/rust_fmt_auto_build_test/badge.svg)](https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib/)
 //!  ![Hits](https://bestia.dev/webpage_hit_counter/get_svg_image/1785154337.svg)
 //!
 //! [![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-151-green.svg)](https://github.com/automation-tasks-rs/encrypt_secret/)

@@ -5,10 +5,11 @@
 [//]: # (auto_cargo_toml_to_md start)
 
 **Library to encrypt/decrypt secrets**  
-***version: 1.0.8 date: 2024-04-20 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib)***
+***version: 1.0.9 date: 2024-04-20 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib)***
 
  ![rust](https://img.shields.io/badge/rust-orange)
- ![work-in-progress](https://img.shields.io/badge/work_in_progress-yellow)
+ ![maintained](https://img.shields.io/badge/maintained-green)
+ ![ready_for_use](https://img.shields.io/badge/ready_for_use-orange)
 
 [//]: # (auto_cargo_toml_to_md end)
 
