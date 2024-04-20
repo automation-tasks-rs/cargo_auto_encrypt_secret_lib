@@ -22,7 +22,7 @@ jobs:
           
           REPO=${{ github.repository }}
           printf "$REPO\n"
-          BRANCH={{ github.event.repository.default_branch }}
+          BRANCH=main
           printf "$BRANCH\n"
 
           printf "Fetching list of cache key\n"
