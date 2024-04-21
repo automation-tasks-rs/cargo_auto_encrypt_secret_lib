@@ -4,7 +4,7 @@ logs/
 # not needed in commits, but also not a problem if they are committed
 /.automation_tasks_rs_file_hashes.json
 
-# always fresh dependenciew
+# always fresh dependencies
 Cargo.lock
 
 # test artifacts don't need to be commited
