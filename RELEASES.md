@@ -14,6 +14,8 @@ The TODO section is part of the [README.md](https://github.com/automation-tasks-
 
 - warning plain text
 
+- get_token_and_encrypt
+
 ## Version 1.1.4 (2024-04-23)
 
 
