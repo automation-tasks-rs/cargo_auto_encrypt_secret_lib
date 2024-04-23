@@ -1,1 +1,1 @@
-window.ALL_CRATES = ["cargo_auto_encrypt_secret_lib","encrypt_secret"];
+window.ALL_CRATES = ["cargo_auto_encrypt_secret_lib"];

@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css">
   <link rel="stylesheet" href="../static.files/rustdoc-5bc39a1768837dd0.css">
   <meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="cargo_auto_encrypt_secret_lib" data-themes=""
-  data-resource-suffix="" data-rustdoc-version="1.77.1 (7cf61ebde 2024-03-27)" data-channel="1.77.1" data-search-js="search-dd67cee4cfa65049.js"
+  data-resource-suffix="" data-rustdoc-version="1.77.2 (25ef9e3d8 2024-04-09)" data-channel="1.77.2" data-search-js="search-dd67cee4cfa65049.js"
   data-settings-js="settings-4313503d2e1961c2.js">
   <script src="../static.files/storage-4c98445ec4002617.js"></script>
   <script defer src="sidebar-items.js"></script>
@@ -29,7 +29,7 @@
   <nav class="mobile-topbar"></nav>
   <nav class="sidebar">
     <div class="sidebar-crate">
-      <h2><a href="../cargo_auto_encrypt_secret_lib/index.html">cargo_auto_encrypt_secret_lib</a><span class="version">1.0.9</span></h2>
+      <h2><a href="../cargo_auto_encrypt_secret_lib/index.html">cargo_auto_encrypt_secret_lib</a><span class="version">1.1.4</span></h2>
     </div>
     <h2 class="location"><a href="#">SshContextTrait</a></h2>
     <div class="sidebar-elems">
@@ -40,7 +40,7 @@
             <a href="#tymethod.decrypt_from_file_data">decrypt_from_file_data</a>
           </li>
           <li>
-            <a href="#tymethod.get_token_and_encrypt">get_token_and_encrypt</a>
+            <a href="#tymethod.get_secret_token_and_encrypt">get_secret_token_and_encrypt</a>
           </li>
           <li>
             <a href="#tymethod.sign_with_ssh_agent_or_identity_file">sign_with_ssh_agent_or_identity_file</a>
@@ -78,30 +78,30 @@
         </div>
         <pre class="rust item-decl"><code>pub trait SshContextTrait {
     // Required methods
-    fn <a href="#tymethod.get_token_and_encrypt" class="fn">get_token_and_encrypt</a>(&amp;self) -&gt; <a class="struct" href="struct.EncryptedString.html"
-title="struct cargo_auto_encrypt_secret_lib::EncryptedString">EncryptedString</a>;
+    fn <a href="#tymethod.get_secret_token_and_encrypt" class="fn">get_secret_token_and_encrypt</a>(&amp;self) -&gt; <a class="struct" href=
+"struct.EncryptedString.html" title="struct cargo_auto_encrypt_secret_lib::EncryptedString">EncryptedString</a>;
     fn <a href="#tymethod.sign_with_ssh_agent_or_identity_file" class="fn">sign_with_ssh_agent_or_identity_file</a>(
         &amp;mut self,
         identity_private_file_path: &amp;Utf8Path,
-        seed_bytes_not_a_secret: &amp;[<a class="primitive" href="https://doc.rust-lang.org/1.77.1/std/primitive.u8.html">u8</a>; <a class="primitive" href=
-"https://doc.rust-lang.org/1.77.1/std/primitive.array.html">32</a>]
+        seed_bytes_not_a_secret: &amp;[<a class="primitive" href="https://doc.rust-lang.org/1.77.2/std/primitive.u8.html">u8</a>; <a class="primitive" href=
+"https://doc.rust-lang.org/1.77.2/std/primitive.array.html">32</a>]
     );
     fn <a href="#tymethod.decrypt_from_file_data" class="fn">decrypt_from_file_data</a>(&amp;mut self, encrypted_string: &<a class="struct" href=
 "struct.EncryptedString.html" title="struct cargo_auto_encrypt_secret_lib::EncryptedString">EncryptedString</a>);
 }</code></pre>
         <h2 id="required-methods" class="section-header">Required Methods<a href="#required-methods" class="anchor">§</a></h2>
         <div class="methods">
-          <section id="tymethod.get_token_and_encrypt" class="method">
+          <section id="tymethod.get_secret_token_and_encrypt" class="method">
             <a class="src rightside" href="../src/cargo_auto_encrypt_secret_lib/ssh_sign_crypt_mod.rs.html#59">source</a>
-            <h4 class="code-header">fn <a href="#tymethod.get_token_and_encrypt" class="fn">get_token_and_encrypt</a>(&amp;self) -&gt; <a class="struct" href=
-            "struct.EncryptedString.html" title="struct cargo_auto_encrypt_secret_lib::EncryptedString">EncryptedString</a></h4>
+            <h4 class="code-header">fn <a href="#tymethod.get_secret_token_and_encrypt" class="fn">get_secret_token_and_encrypt</a>(&amp;self) -&gt; <a class=
+            "struct" href="struct.EncryptedString.html" title="struct cargo_auto_encrypt_secret_lib::EncryptedString">EncryptedString</a></h4>
           </section>
           <section id="tymethod.sign_with_ssh_agent_or_identity_file" class="method">
             <a class="src rightside" href="../src/cargo_auto_encrypt_secret_lib/ssh_sign_crypt_mod.rs.html#60">source</a>
             <h4 class="code-header">fn <a href="#tymethod.sign_with_ssh_agent_or_identity_file" class="fn">sign_with_ssh_agent_or_identity_file</a>( &amp;mut
             self, identity_private_file_path: &amp;Utf8Path, seed_bytes_not_a_secret: &amp;[<a class="primitive" href=
-            "https://doc.rust-lang.org/1.77.1/std/primitive.u8.html">u8</a>; <a class="primitive" href=
-            "https://doc.rust-lang.org/1.77.1/std/primitive.array.html">32</a>] )</h4>
+            "https://doc.rust-lang.org/1.77.2/std/primitive.u8.html">u8</a>; <a class="primitive" href=
+            "https://doc.rust-lang.org/1.77.2/std/primitive.array.html">32</a>] )</h4>
           </section>
           <section id="tymethod.decrypt_from_file_data" class="method">
             <a class="src rightside" href="../src/cargo_auto_encrypt_secret_lib/ssh_sign_crypt_mod.rs.html#61">source</a>

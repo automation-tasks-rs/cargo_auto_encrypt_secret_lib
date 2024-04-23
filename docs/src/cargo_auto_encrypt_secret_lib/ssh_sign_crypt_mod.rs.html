@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css">
   <link rel="stylesheet" href="../../static.files/rustdoc-5bc39a1768837dd0.css">
   <meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="cargo_auto_encrypt_secret_lib" data-themes=
-  "" data-resource-suffix="" data-rustdoc-version="1.77.1 (7cf61ebde 2024-03-27)" data-channel="1.77.1" data-search-js="search-dd67cee4cfa65049.js"
+  "" data-resource-suffix="" data-rustdoc-version="1.77.2 (25ef9e3d8 2024-04-09)" data-channel="1.77.2" data-search-js="search-dd67cee4cfa65049.js"
   data-settings-js="settings-4313503d2e1961c2.js">
   <script src="../../static.files/storage-4c98445ec4002617.js"></script>
   <script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script>
@@ -195,19 +195,19 @@
         <pre class="rust"><code><span class="comment">// ssh_sign_crypt_mod.rs
 
 // region: auto_md_to_doc_comments include doc_comments/ssh_sign_crypt_mod.md A //!
-</span><span class="doccomment">//! How to save a GitHub TOKEN securely inside a file?
+</span><span class="doccomment">//! How to save a GitHub secret_token securely inside a file?
 //!
-//! GitHub TOKEN is used by GitHub API to gain access (authentication and authorization) to your GitHub.  
-//! A TOKEN is a secret just like a password and it must be protected.  
-//! If the TOKEN is leaked, a mal-intentioned can gain access to everything, using the API.  
-//! Never store TOKENS in plain text anywhere!
+//! GitHub secret_token is used by GitHub API to gain access (authentication and authorization) to your GitHub.  
+//! A secret_token is a secret just like a password and it must be protected.  
+//! If the secret_token is leaked, a mal-intentioned can gain access to everything, using the API.  
+//! Never store secret_tokens in plain text anywhere!
 //!
-//! The TOKEN must be encrypted before storing it.  
+//! The secret_token must be encrypted before storing it.  
 //!
 //! ## SSH keys
 //!
 //! We already use SSH keys to connect to GitHub. And we use ssh-agent for easy work with SSH identities.  
-//! I want to use the SSH key inside ssh-agent to encrypt the TOKEN and save it in a file.
+//! I want to use the SSH key inside ssh-agent to encrypt the secret_token and save it in a file.
 //!
 //! The easy solution: encrypt with the Public key and then decrypt with the Private key.  
 //! Problem: ssh-agent can only sign a message with the private key. Nothing more.  
@@ -217,27 +217,27 @@
 //! The user already uses theSSHprivate key and it uses ssh-agent to connect over SSH to GitHub.  
 //! So the user already knows how important are SSH private keys and to keep them secure.
 //!
-//! This could work also for other TOKENS, not just GitHub.
+//! This could work also for other secret_tokens, not just GitHub.
 //!
 //! Encryption
 //!
 //! 1. ssh-agent must contain the chosen SSH identity. Use ssh-add for this.  
 //! 2. Create a random message that will be used only by this code. It is not a secret.  
 //! 3. Sign this message. This will become the password for symmetric encryption. It is a secret.  
-//! 4. Input the token interactively in hidden input. It is a secret.  
-//! 5. Use the password to symmetric encrypt the token.  
-//! 6. Zeroize the token and password.  
-//! 7. Save the message and the encrypted token in a json file.
+//! 4. Input the secret_token interactively in hidden input. It is a secret.  
+//! 5. Use the password to symmetric encrypt the secret_token.  
+//! 6. Zeroize the secret_token and password.  
+//! 7. Save the message and the encrypted secret_token in a json file.
 //!
 //! Decryption
 //!
 //! 1. ssh-agent must contain the SSH identity. Use ssh-add for this.  
-//! 2. Read the json file, get the ssh_identity_file_path, message and the encrypted token.  
+//! 2. Read the json file, get the ssh_identity_private_file_path, message and the encrypted secret_token.  
 //! 3. Find the right identity inside ssh-agent.  
 //! 4. Sign the message. This will become the password for symmetric decryption. It is a secret.  
-//! 5. Use this password to symmetric decrypt the token.  
-//! 6. Get the token.  
-//! 7. Zeroize the token and password.
+//! 5. Use this password to symmetric decrypt the secret_token.  
+//! 6. Get the secret_token.  
+//! 7. Zeroize the secret_token and password.
 //!
 //! Reference: &lt;https://www.agwa.name/blog/post/ssh_signatures&gt;
 //!
@@ -250,7 +250,7 @@
 <span class="kw">use </span><span class="kw">crate</span>::utils_mod::YELLOW;
 
 <span class="kw">pub trait </span>SshContextTrait {
-    <span class="kw">fn </span>get_token_and_encrypt(<span class="kw-2">&</span><span class="self">self</span>) -&gt; <span class=
+    <span class="kw">fn </span>get_secret_token_and_encrypt(<span class="kw-2">&</span><span class="self">self</span>) -&gt; <span class=
 "kw">crate</span>::EncryptedString;
     <span class="kw">fn </span>sign_with_ssh_agent_or_identity_file(<span class="kw-2">&amp;mut </span><span class=
 "self">self</span>, identity_private_file_path: <span class="kw-2">&</span>camino::Utf8Path, seed_bytes_not_a_secret: <span class=
@@ -259,12 +259,12 @@
 "kw-2">&</span><span class="kw">crate</span>::EncryptedString);
 }
 
-<span class="doccomment">/// Encrypt token with the chosen ssh_identity and save as json encoded in Base64
+<span class="doccomment">/// Encrypt secret_token with the chosen ssh_identity and save as json encoded in Base64
 ///
 /// For better user-experience, use ssh-add to put SSH identity into ssh-agent.
 /// WARNING: using ssh-agent is less secure explicitly because there is no need for user interaction.
 </span><span class="kw">pub fn </span>encrypt_with_ssh_interactive_save_file(ssh_context: <span class="kw-2">&amp;mut </span><span class=
-"kw">impl </span>SshContextTrait, identity_file_path: <span class="kw-2">&</span>camino::Utf8Path, encrypted_string_file_path: <span class=
+"kw">impl </span>SshContextTrait, identity_private_file_path: <span class="kw-2">&</span>camino::Utf8Path, encrypted_string_file_path: <span class=
 "kw-2">&</span>camino::Utf8Path) {
     <span class="doccomment">/// Internal function Generate a random passcode
     </span><span class="kw">fn </span>random_byte_passcode() -&gt; [u8; <span class="number">32</span>] {
@@ -274,23 +274,24 @@
         password
     }
 
-    <span class="kw">let </span>identity_file_path_expanded = <span class="kw">crate</span>::utils_mod::file_path_home_expand(identity_file_path);
-    <span class="kw">if </span>!camino::Utf8Path::new(<span class="kw-2">&</span>identity_file_path_expanded).exists() {
-        <span class="macro">panic!</span>(<span class="string">"{RED}Error: File {identity_file_path_expanded} does not exist! {RESET}"</span>);
+    <span class="kw">let </span>identity_private_file_path_expanded = <span class=
+"kw">crate</span>::utils_mod::file_path_home_expand(identity_private_file_path);
+    <span class="kw">if </span>!camino::Utf8Path::new(<span class="kw-2">&</span>identity_private_file_path_expanded).exists() {
+        <span class="macro">panic!</span>(<span class="string">"{RED}Error: File {identity_private_file_path_expanded} does not exist! {RESET}"</span>);
     }
 
     <span class="kw">let </span>seed_bytes_not_a_secret = random_byte_passcode();
     <span class="kw">let </span>seed_string_not_a_secret = &lt;base64ct::Base64 <span class="kw">as </span>base64ct::Encoding&gt;::encode_string(<span class=
 "kw-2">&</span>seed_bytes_not_a_secret);
 
-    ssh_context.sign_with_ssh_agent_or_identity_file(<span class="kw-2">&</span>identity_file_path_expanded, <span class=
+    ssh_context.sign_with_ssh_agent_or_identity_file(<span class="kw-2">&</span>identity_private_file_path_expanded, <span class=
 "kw-2">&</span>seed_bytes_not_a_secret);
-    <span class="kw">let </span>encrypted_text = ssh_context.get_token_and_encrypt();
+    <span class="kw">let </span>encrypted_text = ssh_context.get_secret_token_and_encrypt();
 
     <span class="comment">// make json with 3 fields: fingerprint, seed, encrypted
     </span><span class="kw">let </span>json_value = <span class="macro">serde_json::json!</span>(
     {
-        <span class="string">"identity"</span>: identity_file_path.as_str(),
+        <span class="string">"identity"</span>: identity_private_file_path.as_str(),
         <span class="string">"seed"</span>: seed_string_not_a_secret,
         <span class="string">"encrypted"</span>:encrypted_text.<span class="number">0</span>,
     });
@@ -306,7 +307,7 @@
     <span class="macro">println!</span>(<span class="string">"    {YELLOW}Encrypted text saved in file for future use.{RESET}"</span>)
 }
 
-<span class="doccomment">/// Decrypt token from file (json encoded in Base64) with the chosen ssh_identity
+<span class="doccomment">/// Decrypt secret_token from file (json encoded in Base64) with the chosen ssh_identity
 ///
 /// The decrypted secret is stored in the ssh_context
 /// For better user-experience, use ssh-add to put SSH identity into ssh-agent.
@@ -324,7 +325,7 @@
 "kw-2">&</span>file_text).unwrap();
     <span class="kw">let </span>file_text = String::from_utf8(file_text).unwrap();
     <span class="kw">let </span>json_value: serde_json::Value = serde_json::from_str(<span class="kw-2">&</span>file_text).unwrap();
-    <span class="kw">let </span>identity_file_path: <span class="kw-2">&</span>str = json_value.get(<span class=
+    <span class="kw">let </span>identity_private_file_path: <span class="kw-2">&</span>str = json_value.get(<span class=
 "string">"identity"</span>).unwrap().as_str().unwrap();
     <span class="kw">let </span>seed_for_password_not_a_secret: <span class="kw-2">&</span>str = json_value.get(<span class=
 "string">"seed"</span>).unwrap().as_str().unwrap();
@@ -332,10 +333,11 @@
 "string">"encrypted"</span>).unwrap().as_str().unwrap();
     <span class="kw">let </span>encrypted_string = <span class="kw">crate</span>::EncryptedString(encrypted_string.to_string());
 
-    <span class="kw">let </span>identity_file_path = camino::Utf8Path::new(identity_file_path);
-    <span class="kw">let </span>identity_file_path_expanded = <span class="kw">crate</span>::utils_mod::file_path_home_expand(identity_file_path);
-    <span class="kw">if </span>!camino::Utf8Path::new(<span class="kw-2">&</span>identity_file_path_expanded).exists() {
-        <span class="macro">panic!</span>(<span class="string">"{RED}Error: File {identity_file_path_expanded} does not exist! {RESET}"</span>);
+    <span class="kw">let </span>identity_private_file_path = camino::Utf8Path::new(identity_private_file_path);
+    <span class="kw">let </span>identity_private_file_path_expanded = <span class=
+"kw">crate</span>::utils_mod::file_path_home_expand(identity_private_file_path);
+    <span class="kw">if </span>!camino::Utf8Path::new(<span class="kw-2">&</span>identity_private_file_path_expanded).exists() {
+        <span class="macro">panic!</span>(<span class="string">"{RED}Error: File {identity_private_file_path_expanded} does not exist! {RESET}"</span>);
     }
 
     <span class="kw">let </span>seed_bytes_not_a_secret = &lt;base64ct::Base64 <span class=
@@ -343,7 +345,7 @@
     <span class="kw">let </span>seed_bytes_not_a_secret: [u8; <span class="number">32</span>] = seed_bytes_not_a_secret[..<span class=
 "number">32</span>].try_into().unwrap();
 
-    ssh_context.sign_with_ssh_agent_or_identity_file(<span class="kw-2">&</span>identity_file_path_expanded, <span class=
+    ssh_context.sign_with_ssh_agent_or_identity_file(<span class="kw-2">&</span>identity_private_file_path_expanded, <span class=
 "kw-2">&</span>seed_bytes_not_a_secret);
     <span class="comment">// the decrypted secret will be inside ssh_context and not in this external library crate
     </span>ssh_context.decrypt_from_file_data(<span class="kw-2">&</span>encrypted_string);

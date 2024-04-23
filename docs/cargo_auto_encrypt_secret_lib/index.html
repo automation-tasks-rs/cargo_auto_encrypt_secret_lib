@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css">
   <link rel="stylesheet" href="../static.files/rustdoc-5bc39a1768837dd0.css">
   <meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="cargo_auto_encrypt_secret_lib" data-themes=""
-  data-resource-suffix="" data-rustdoc-version="1.77.1 (7cf61ebde 2024-03-27)" data-channel="1.77.1" data-search-js="search-dd67cee4cfa65049.js"
+  data-resource-suffix="" data-rustdoc-version="1.77.2 (25ef9e3d8 2024-04-09)" data-channel="1.77.2" data-search-js="search-dd67cee4cfa65049.js"
   data-settings-js="settings-4313503d2e1961c2.js">
   <script src="../static.files/storage-4c98445ec4002617.js"></script>
   <script defer src="../crates.js"></script>
@@ -29,7 +29,7 @@
   <nav class="mobile-topbar"></nav>
   <nav class="sidebar">
     <div class="sidebar-crate">
-      <h2><a href="../cargo_auto_encrypt_secret_lib/index.html">cargo_auto_encrypt_secret_lib</a><span class="version">1.0.9</span></h2>
+      <h2><a href="../cargo_auto_encrypt_secret_lib/index.html">cargo_auto_encrypt_secret_lib</a><span class="version">1.1.4</span></h2>
     </div>
     <div class="sidebar-elems">
       <ul class="block">
@@ -86,7 +86,7 @@
           <div class="docblock">
             <h2 id="cargo_auto_encrypt_secret_lib"><a class="doc-anchor" href="#cargo_auto_encrypt_secret_lib">§</a>cargo_auto_encrypt_secret_lib</h2>
             <p><strong>Library to encrypt/decrypt secrets</strong><br>
-            <em><strong>version: 1.0.9 date: 2024-04-20 author: <a href="https://bestia.dev">bestia.dev</a> repository: <a href=
+            <em><strong>version: 1.1.4 date: 2024-04-23 author: <a href="https://bestia.dev">bestia.dev</a> repository: <a href=
             "https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib">GitHub</a></strong></em></p>
             <p><img src="https://img.shields.io/badge/rust-orange" alt="rust"> <img src="https://img.shields.io/badge/maintained-green" alt="maintained">
             <img src="https://img.shields.io/badge/ready_for_use-orange" alt="ready_for_use"></p>
@@ -99,63 +99,64 @@
             "https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib/"><img src=
             "https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib/workflows/rust_fmt_auto_build_test/badge.svg" alt="Rust"></a> <img src=
             "https://bestia.dev/webpage_hit_counter/get_svg_image/1785154337.svg" alt="Hits"></p>
-            <p><a href="https://github.com/automation-tasks-rs/encrypt_secret/"><img src="https://img.shields.io/badge/Lines_in_Rust-151-green.svg" alt=
-            "Lines in Rust code"></a> <a href="https://github.com/automation-tasks-rs/encrypt_secret/"><img src=
-            "https://img.shields.io/badge/Lines_in_Doc_comments-185-blue.svg" alt="Lines in Doc comments"></a> <a href=
-            "https://github.com/automation-tasks-rs/encrypt_secret/"><img src="https://img.shields.io/badge/Lines_in_comments-17-purple.svg" alt=
-            "Lines in Comments"></a> <a href="https://github.com/automation-tasks-rs/encrypt_secret/"><img src=
-            "https://img.shields.io/badge/Lines_in_examples-0-yellow.svg" alt="Lines in examples"></a> <a href=
-            "https://github.com/automation-tasks-rs/encrypt_secret/"><img src="https://img.shields.io/badge/Lines_in_tests-1-orange.svg" alt=
-            "Lines in tests"></a></p>
+            <p><a href="https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib/"><img src=
+            "https://img.shields.io/badge/Lines_in_Rust-151-green.svg" alt="Lines in Rust code"></a> <a href=
+            "https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib/"><img src="https://img.shields.io/badge/Lines_in_Doc_comments-186-blue.svg"
+            alt="Lines in Doc comments"></a> <a href="https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib/"><img src=
+            "https://img.shields.io/badge/Lines_in_comments-17-purple.svg" alt="Lines in Comments"></a> <a href=
+            "https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib/"><img src="https://img.shields.io/badge/Lines_in_examples-0-yellow.svg" alt=
+            "Lines in examples"></a> <a href="https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib/"><img src=
+            "https://img.shields.io/badge/Lines_in_tests-1-orange.svg" alt="Lines in tests"></a></p>
             <p>Hashtags: #rustlang My projects on GitHub are more like a tutorial than a finished product: <a href=
             "https://github.com/bestia-dev/tutorials_rust_wasm">bestia-dev tutorials</a>.</p>
             <h3 id="secrets"><a class="doc-anchor" href="#secrets">§</a>Secrets</h3>
-            <p>When we write an application, every connection to any server needs to work with secrets: passwords, passkeys, passcodes, passphrases, API tokens
-            and more.</p>
+            <p>When we write an application, every connection to any server needs to work with secrets: passwords, passkeys, passcodes, passphrases, API
+            secret_tokens and more.</p>
             <p>Sometimes it is just fine to let the user type the password. Passwords are easy for humans to remember and type. But they are the least
             secure.</p>
-            <p>It is much better to have a long random “key” string like the API token, but no human is capable of remembering that. It means we need to store
-            it somewhere.</p>
+            <p>It is much better to have a long random “key” string like the API secret_token, but no human is capable of remembering that. It means we need to
+            store it somewhere.</p>
             <p>It is theoretically impossible to store this secret 100% securely using only software. Modern computers use special chips for that. But we can
             make it hard and not obvious for an attacker to get the secret.</p>
-            <h3 id="github-api-token"><a class="doc-anchor" href="#github-api-token">§</a>GitHub API token</h3>
-            <p>The GitHub API token is a secret just like a password. Maybe even greater.<br>
-            With this API token, a maleficent actor can change basically anything in your GitHub account. You don’t want that.</p>
+            <h3 id="github-api-secret_token"><a class="doc-anchor" href="#github-api-secret_token">§</a>GitHub API secret_token</h3>
+            <p>The GitHub API secret_token is a secret just like a password. Maybe even greater.<br>
+            With this API secret_token, a maleficent actor can change basically anything in your GitHub account. You don’t want that.</p>
             <p>How to protect this secret?<br>
             Ok, there are some basic recommendations:</p>
             <ul>
-              <li>Give the least permission/authorization to the API token to minimize the harm an attacker can do</li>
-              <li>Expire the token frequently, so old tokens are of no use</li>
+              <li>Give the least permission/authorization to the API secret_token to minimize the harm an attacker can do</li>
+              <li>Expire the secret_token frequently, so old secret_tokens are of no use</li>
               <li>HTTPS is a no-brainer. Never use HTTP ever again. It is plain text over the wire.</li>
-              <li>Never store the token in a file as plain text</li>
+              <li>Never store the secret_token in a file as plain text</li>
               <li>Plain text inside env vars can also be accessed from malware</li>
             </ul>
             <h3 id="symmetric-encryption"><a class="doc-anchor" href="#symmetric-encryption">§</a>Symmetric encryption</h3>
             <p>We will use encryption <a href="https://docs.rs/aes-gcm/latest/aes_gcm/index.html">aes_gcm::Aes256Gcm</a> for very short strings like API
-            tokens. So I suppose the performance is not a problem.<br>
+            secret_tokens. So I suppose the performance is not a problem.<br>
             We use a passcode of 32 bytes to encrypt a string.<br>
             We can also enter a string password, that will be internally hashed into a 32-byte passcode.</p>
-            <h3 id="use-ssh-key-to-encrypt-token"><a class="doc-anchor" href="#use-ssh-key-to-encrypt-token">§</a>Use SSH key to encrypt token</h3>
+            <h3 id="use-ssh-key-to-encrypt-secret_token"><a class="doc-anchor" href="#use-ssh-key-to-encrypt-secret_token">§</a>Use SSH key to encrypt
+            secret_token</h3>
             <p>We are accustomed to working with SSH keys because of Git and SSH connection to the web servers.<br>
             We already know how to create, secure and manage SSH keys. We know all about the private and public keys.<br>
             We know that the private key is secured by a passphrase.<br>
             We already know how to add an SSH key to ssh-agent. And we know that the use of ssh-agent makes life easier, but it has some security concerns. In
             most cases, this is not critical, but you have to choose your own balance between Convenience and Security.<br>
             All this knowledge is already mastered because of the workflow when developing in Rust.<br>
-            We could use the same technique to encrypt the API token.</p>
+            We could use the same technique to encrypt the API secret_token.</p>
             <p>We will use the private key to sign a random seed and the result will be a new super-secret passcode. The only way to get to this super-secret
             passcode is to sign the seed with the private key. We suppose that only the owner can sign with his/her private key. This is the basis of SSH key
             security.</p>
-            <p>The super-secret passcode will be used to symmetrically encrypt the token and write it to a file as text. It is much simpler to work with text
-            files.</p>
+            <p>The super-secret passcode will be used to symmetrically encrypt the secret_token and write it to a file as text. It is much simpler to work with
+            text files.</p>
             <p>Never commit secrets to your repository. GitHub is regularly scanned for uploaded secrets. That is a big no-no. I prefer to store the encrypted
-            token in the <code>~/.ssh</code> directory near to other secret and encrypted keys.</p>
+            secret_token in the <code>~/.ssh</code> directory near to other secret and encrypted keys.</p>
             <h3 id="create-an-ssh-key"><a class="doc-anchor" href="#create-an-ssh-key">§</a>Create an SSH key</h3>
-            <p>It is recommended to encrypt every API token with its dedicated SSH key. This way you have granular control over how to use it.</p>
+            <p>It is recommended to encrypt every API secret_token with its dedicated SSH key. This way you have granular control over how to use it.</p>
             <div class="example-wrap">
-              <pre class="language-bash"><code>ssh-keygen -t ed25519 -C "github api token"
+              <pre class="language-bash"><code>ssh-keygen -t ed25519 -C "github api secret_token"
 # for test type these interactively:
-# file name: tests/test_github_api_token_ssh_1
+# file name: tests/test_github_api_secret_token_ssh_1
 # passphrase: test_passphrase
 # repeat passphrase: test_passphrase
 </code></pre>
@@ -166,16 +167,17 @@
             to the computer, he can do anything. But that does not mean it is easy and quick. We can make it harder and harder to find a secret. Finally, we
             have to choose a balance between Convenience and Security.</p>
             <p>You can choose to type the API key into the terminal every time. This is very inconvenient. You cannot remember the API key, you have to store
-            it somewhere on the computer. And then use copy-paste. This is also a security concern. This secret token will stay in the clipboard and that is
+            it somewhere on the computer. And then use copy-paste. This is also a security concern. This secret_token will stay in the clipboard and that is
             easy to extract.</p>
-            <p>Never store secret tokens in plain text. Nor in files nor environment variables. Files and env var are easy to upload to a malicious website.
+            <p>Never store secret_tokens in plain text. Nor in files nor environment variables. Files and env var are easy to upload to a malicious website.
             Use some kind of secret manager or encryption.</p>
-            <p>When the token is encrypted with SSH, it must be decrypted using the private key. The private key is secured with a passphrase. This passphrase
-            is easy to remember and type. You can choose to type the passphrase on every use of the token. This is pretty secure but inconvenient.</p>
+            <p>When the secret_token is encrypted with SSH, it must be decrypted using the private key. The private key is secured with a passphrase. This
+            passphrase is easy to remember and type. You can choose to type the passphrase on every use of the secret_token. This is pretty secure but
+            inconvenient.</p>
             <p>Ultimately you can use ssh-agent to decrypt the private key only once typing the passphrase. It will work in the background for a specific time
             like 1 hour or until the end of the terminal session. This is not secure, because an attacker could use the same open-source code to extract the
-            token from ssh-agent in unencrypted form. But it is tricky to do and it is time-limited.</p>
-            <p>Just to mention the token could be extracted from memory while in use. Or that the attacker could install a key logger and send all typed
+            secret_token from ssh-agent in unencrypted form. But it is tricky to do and it is time-limited.</p>
+            <p>Just to mention the secret_token could be extracted from memory while in use. Or that the attacker could install a key logger and send all typed
             passwords and passphrases to a malicious website. There are really no limits to software exploits once the attacker has enough privilege.</p>
             <p>Finally, your choice.</p>
             <h3 id="open-source-and-free-as-a-beer"><a class="doc-anchor" href="#open-source-and-free-as-a-beer">§</a>Open-source and free as a beer</h3>
@@ -209,7 +211,7 @@
               "mod cargo_auto_encrypt_secret_lib::ssh_sign_crypt_mod">ssh_sign_crypt_mod</a><span title="Restricted Visibility">&nbsp;🔒</span>
             </div>
             <div class="desc docblock-short">
-              How to save a GitHub TOKEN securely inside a file?
+              How to save a GitHub secret_token securely inside a file?
             </div>
           </li>
           <li>
@@ -257,7 +259,7 @@
               "fn cargo_auto_encrypt_secret_lib::decrypt_with_ssh_interactive_from_file">decrypt_with_ssh_interactive_from_file</a>
             </div>
             <div class="desc docblock-short">
-              Decrypt token from file (json encoded in Base64) with the chosen ssh_identity
+              Decrypt secret_token from file (json encoded in Base64) with the chosen ssh_identity
             </div>
           </li>
           <li>
@@ -266,7 +268,7 @@
               "fn cargo_auto_encrypt_secret_lib::encrypt_with_ssh_interactive_save_file">encrypt_with_ssh_interactive_save_file</a>
             </div>
             <div class="desc docblock-short">
-              Encrypt token with the chosen ssh_identity and save as json encoded in Base64
+              Encrypt secret_token with the chosen ssh_identity and save as json encoded in Base64
             </div>
           </li>
           <li>

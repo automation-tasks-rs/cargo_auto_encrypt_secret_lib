@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="generator" content="rustdoc">
-  <meta name="description" content="Decrypt token from file (json encoded in Base64) with the chosen ssh_identity">
+  <meta name="description" content="Decrypt secret_token from file (json encoded in Base64) with the chosen ssh_identity">
   <title>decrypt_with_ssh_interactive_from_file in cargo_auto_encrypt_secret_lib - Rust</title>
   <link rel="preload" as="font" type="font/woff2" crossorigin="" href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin="" href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2">
@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css">
   <link rel="stylesheet" href="../static.files/rustdoc-5bc39a1768837dd0.css">
   <meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="cargo_auto_encrypt_secret_lib" data-themes=""
-  data-resource-suffix="" data-rustdoc-version="1.77.1 (7cf61ebde 2024-03-27)" data-channel="1.77.1" data-search-js="search-dd67cee4cfa65049.js"
+  data-resource-suffix="" data-rustdoc-version="1.77.2 (25ef9e3d8 2024-04-09)" data-channel="1.77.2" data-search-js="search-dd67cee4cfa65049.js"
   data-settings-js="settings-4313503d2e1961c2.js">
   <script src="../static.files/storage-4c98445ec4002617.js"></script>
   <script defer src="sidebar-items.js"></script>
@@ -29,7 +29,7 @@
   <nav class="mobile-topbar"></nav>
   <nav class="sidebar">
     <div class="sidebar-crate">
-      <h2><a href="../cargo_auto_encrypt_secret_lib/index.html">cargo_auto_encrypt_secret_lib</a><span class="version">1.0.9</span></h2>
+      <h2><a href="../cargo_auto_encrypt_secret_lib/index.html">cargo_auto_encrypt_secret_lib</a><span class="version">1.1.4</span></h2>
     </div>
     <div class="sidebar-elems"></div>
   </nav>
@@ -68,7 +68,7 @@
             <span>Expand description</span>
           </summary>
           <div class="docblock">
-            <p>Decrypt token from file (json encoded in Base64) with the chosen ssh_identity</p>
+            <p>Decrypt secret_token from file (json encoded in Base64) with the chosen ssh_identity</p>
             <p>The decrypted secret is stored in the ssh_context For better user-experience, use ssh-add to put SSH identity into ssh-agent. WARNING: using
             ssh-agent is less secure explicitly because there is no need for user interaction.</p>
           </div>

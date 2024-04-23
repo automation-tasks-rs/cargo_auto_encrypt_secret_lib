@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="generator" content="rustdoc">
-  <meta name="description" content="How to save a GitHub TOKEN securely inside a file?">
+  <meta name="description" content="How to save a GitHub secret_token securely inside a file?">
   <title>cargo_auto_encrypt_secret_lib::ssh_sign_crypt_mod - Rust</title>
   <link rel="preload" as="font" type="font/woff2" crossorigin="" href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin="" href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2">
@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css">
   <link rel="stylesheet" href="../../static.files/rustdoc-5bc39a1768837dd0.css">
   <meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="cargo_auto_encrypt_secret_lib" data-themes=
-  "" data-resource-suffix="" data-rustdoc-version="1.77.1 (7cf61ebde 2024-03-27)" data-channel="1.77.1" data-search-js="search-dd67cee4cfa65049.js"
+  "" data-resource-suffix="" data-rustdoc-version="1.77.2 (25ef9e3d8 2024-04-09)" data-channel="1.77.2" data-search-js="search-dd67cee4cfa65049.js"
   data-settings-js="settings-4313503d2e1961c2.js">
   <script src="../../static.files/storage-4c98445ec4002617.js"></script>
   <script defer src="../sidebar-items.js"></script>
@@ -29,7 +29,7 @@
   <nav class="mobile-topbar"></nav>
   <nav class="sidebar">
     <div class="sidebar-crate">
-      <h2><a href="../../cargo_auto_encrypt_secret_lib/index.html">cargo_auto_encrypt_secret_lib</a><span class="version">1.0.9</span></h2>
+      <h2><a href="../../cargo_auto_encrypt_secret_lib/index.html">cargo_auto_encrypt_secret_lib</a><span class="version">1.1.4</span></h2>
     </div>
     <h2 class="location"><a href="#">Module ssh_sign_crypt_mod</a></h2>
     <div class="sidebar-elems">
@@ -77,41 +77,41 @@
             <span>Expand description</span>
           </summary>
           <div class="docblock">
-            <p>How to save a GitHub TOKEN securely inside a file?</p>
-            <p>GitHub TOKEN is used by GitHub API to gain access (authentication and authorization) to your GitHub.<br>
-            A TOKEN is a secret just like a password and it must be protected.<br>
-            If the TOKEN is leaked, a mal-intentioned can gain access to everything, using the API.<br>
-            Never store TOKENS in plain text anywhere!</p>
-            <p>The TOKEN must be encrypted before storing it.</p>
+            <p>How to save a GitHub secret_token securely inside a file?</p>
+            <p>GitHub secret_token is used by GitHub API to gain access (authentication and authorization) to your GitHub.<br>
+            A secret_token is a secret just like a password and it must be protected.<br>
+            If the secret_token is leaked, a mal-intentioned can gain access to everything, using the API.<br>
+            Never store secret_tokens in plain text anywhere!</p>
+            <p>The secret_token must be encrypted before storing it.</p>
             <h3 id="ssh-keys"><a class="doc-anchor" href="#ssh-keys">§</a>SSH keys</h3>
             <p>We already use SSH keys to connect to GitHub. And we use ssh-agent for easy work with SSH identities.<br>
-            I want to use the SSH key inside ssh-agent to encrypt the TOKEN and save it in a file.</p>
+            I want to use the SSH key inside ssh-agent to encrypt the secret_token and save it in a file.</p>
             <p>The easy solution: encrypt with the Public key and then decrypt with the Private key.<br>
             Problem: ssh-agent can only sign a message with the private key. Nothing more.<br>
             It cannot decrypt with private key, because it would be a security risk.</p>
             <p>The security is based on the assumption that only the owner of the[]SSHprivate key can sign the message.<br>
             The user already uses theSSHprivate key and it uses ssh-agent to connect over SSH to GitHub.<br>
             So the user already knows how important are SSH private keys and to keep them secure.</p>
-            <p>This could work also for other TOKENS, not just GitHub.</p>
+            <p>This could work also for other secret_tokens, not just GitHub.</p>
             <p>Encryption</p>
             <ol>
               <li>ssh-agent must contain the chosen SSH identity. Use ssh-add for this.</li>
               <li>Create a random message that will be used only by this code. It is not a secret.</li>
               <li>Sign this message. This will become the password for symmetric encryption. It is a secret.</li>
-              <li>Input the token interactively in hidden input. It is a secret.</li>
-              <li>Use the password to symmetric encrypt the token.</li>
-              <li>Zeroize the token and password.</li>
-              <li>Save the message and the encrypted token in a json file.</li>
+              <li>Input the secret_token interactively in hidden input. It is a secret.</li>
+              <li>Use the password to symmetric encrypt the secret_token.</li>
+              <li>Zeroize the secret_token and password.</li>
+              <li>Save the message and the encrypted secret_token in a json file.</li>
             </ol>
             <p>Decryption</p>
             <ol>
               <li>ssh-agent must contain the SSH identity. Use ssh-add for this.</li>
-              <li>Read the json file, get the ssh_identity_file_path, message and the encrypted token.</li>
+              <li>Read the json file, get the ssh_identity_private_file_path, message and the encrypted secret_token.</li>
               <li>Find the right identity inside ssh-agent.</li>
               <li>Sign the message. This will become the password for symmetric decryption. It is a secret.</li>
-              <li>Use this password to symmetric decrypt the token.</li>
-              <li>Get the token.</li>
-              <li>Zeroize the token and password.</li>
+              <li>Use this password to symmetric decrypt the secret_token.</li>
+              <li>Get the secret_token.</li>
+              <li>Zeroize the secret_token and password.</li>
             </ol>
             <p>Reference: <a href="https://www.agwa.name/blog/post/ssh_signatures">https://www.agwa.name/blog/post/ssh_signatures</a></p>
           </div>
@@ -133,7 +133,7 @@
               "fn cargo_auto_encrypt_secret_lib::ssh_sign_crypt_mod::decrypt_with_ssh_interactive_from_file">decrypt_with_ssh_interactive_from_file</a>
             </div>
             <div class="desc docblock-short">
-              Decrypt token from file (json encoded in Base64) with the chosen ssh_identity
+              Decrypt secret_token from file (json encoded in Base64) with the chosen ssh_identity
             </div>
           </li>
           <li>
@@ -142,7 +142,7 @@
               "fn cargo_auto_encrypt_secret_lib::ssh_sign_crypt_mod::encrypt_with_ssh_interactive_save_file">encrypt_with_ssh_interactive_save_file</a>
             </div>
             <div class="desc docblock-short">
-              Encrypt token with the chosen ssh_identity and save as json encoded in Base64
+              Encrypt secret_token with the chosen ssh_identity and save as json encoded in Base64
             </div>
           </li>
         </ul>
