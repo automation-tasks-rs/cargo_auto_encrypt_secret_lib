@@ -8,6 +8,6 @@ logs/
 Cargo.lock
 
 # test artifacts don't need to be commited
-tests/test_github_api_token_ssh_1
-tests/test_github_api_token_ssh_1.pub
-tests/test_github_api_token_encrypted.txt
+tests/test_github_api_secret_token_ssh_1
+tests/test_github_api_secret_token_ssh_1.pub
+tests/test_github_api_secret_token_encrypted.txt
