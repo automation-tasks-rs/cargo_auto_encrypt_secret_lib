@@ -12,6 +12,8 @@ The TODO section is part of the [README.md](https://github.com/automation-tasks-
 
 - arg_secret
 
+- warning plain text
+
 ## Version 1.1.4 (2024-04-23)
 
 
