@@ -64,7 +64,7 @@
 //! We could use the same technique to encrypt the API secret_token.
 //!
 //! We will use the private key to sign a random seed and the result will be a new super-secret passcode.
-//! The only way to get to this super-secret passcode is to sign the seed with the private key. We suppose that only the owner can sign with his/her private key. This is the basis of SSH key security.
+//! The only way to get to this super-secret passcode is to sign the seed with the private key. We suppose that only the github_owner can sign with his/her private key. This is the basis of SSH key security.
 //!
 //! The super-secret passcode will be used to symmetrically encrypt the secret_token and write it to a file as text. It is much simpler to work with text files.
 //!

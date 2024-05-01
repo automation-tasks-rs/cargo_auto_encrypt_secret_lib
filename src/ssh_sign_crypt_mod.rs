@@ -19,7 +19,7 @@
 //! Problem: ssh-agent can only sign a message with the private key. Nothing more.  
 //! It cannot decrypt with private key, because it would be a security risk.
 //!
-//! The security is based on the assumption that only the owner of the[]SSHprivate key can sign the message.  
+//! The security is based on the assumption that only the github_owner of the[]SSHprivate key can sign the message.  
 //! The user already uses theSSHprivate key and it uses ssh-agent to connect over SSH to GitHub.  
 //! So the user already knows how important are SSH private keys and to keep them secure.
 //!
