@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 [//]: # (auto_md_to_doc_comments segment start A)
 
 How to save a GitHub secret_token securely inside a file?
