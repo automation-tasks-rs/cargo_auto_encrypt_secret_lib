@@ -9,8 +9,7 @@
 ***version: 1.1.8 date: 2024-04-23 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/automation-tasks-rs/cargo_auto_encrypt_secret_lib)***
 
  ![rust](https://img.shields.io/badge/rust-orange)
- ![maintained](https://img.shields.io/badge/maintained-green)
- ![ready_for_use](https://img.shields.io/badge/ready_for_use-orange)
+ ![obsolete](https://img.shields.io/badge/obsolete-red)
 
 [//]: # (auto_cargo_toml_to_md end)
 
@@ -32,6 +31,11 @@
 
 Hashtags: #rustlang 
 My projects on GitHub are more like a tutorial than a finished product: [bestia-dev tutorials](https://github.com/bestia-dev/tutorials_rust_wasm).
+
+## OBSOLETE
+
+This will not be a separate crate anymore. This will be a module file that the developer copy-paste into his source code.
+I decided that the developer must have complete control over this code in its own project.
 
 ## Secrets
 
