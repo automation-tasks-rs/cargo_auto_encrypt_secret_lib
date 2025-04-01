@@ -13,6 +13,9 @@
 
 [//]: # (auto_cargo_toml_to_md end)
 
+ ![logo](https://raw.githubusercontent.com/automation-tasks-rs/cargo-auto/main/images/logo/logo_cargo_auto.svg)
+ this repo is part of the [automation_tasks_rs](https://github.com/automation-tasks-rs) project
+ 
  [![crates.io](https://img.shields.io/crates/v/cargo_auto_encrypt_secret_lib.svg)](https://crates.io/crates/cargo_auto_encrypt_secret_lib)
  [![Documentation](https://docs.rs/cargo_auto_encrypt_secret_lib/badge.svg)](https://docs.rs/cargo_auto_encrypt_secret_lib/)
  [![Lib.rs](https://img.shields.io/badge/Lib.rs-rust-orange.svg)](https://lib.rs/crates/cargo_auto_encrypt_secret_lib/)
